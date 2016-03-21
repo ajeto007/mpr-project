@@ -1,0 +1,35 @@
+{
+  "name": "Nette-LiveFormValidation",
+  "version": "1.0.0",
+  "homepage": "https://github.com/JakubBarta/Nette-LiveFormValidation",
+  "main": [
+    "src/live-form-validation.js",
+    "src/netteForms.js"
+  ],
+  "authors": [
+    "Radek Ježdík",
+    "MartyIX",
+    "David Grudl",
+    "pavelplzak",
+    "Robyer",
+    "Jakub Barta <jakub.barta@gmail.com>"
+  ],
+  "dependecies": {
+    "jquery": "~2.1.1"
+  },
+  "description": "Live form validation for Nette Framework",
+  "keywords": [
+    "nette",
+    "bootstrap",
+    "form",
+    "validation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,6 +1,7 @@
+{layout '../@layout-sign.latte'}
+
 {block content}
-<h1 n:block=title>Sign in</h1>
+    {include '../components/signInForm.latte', form => signInForm}
 
-{control signInForm}
-
-{* or use {include '../components/form.latte', form => signInForm} *}
+    <a href="#">Zapomenuté heslo</a>
+{/block}

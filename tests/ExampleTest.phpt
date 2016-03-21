@@ -11,24 +11,24 @@ $container = require __DIR__ . '/bootstrap.php';
 
 class ExampleTest extends Tester\TestCase
 {
-	private $container;
+    private $container;
 
 
-	function __construct(Nette\DI\Container $container)
-	{
-		$this->container = $container;
-	}
+    function __construct(Nette\DI\Container $container)
+    {
+        $this->container = $container;
+    }
 
 
-	function setUp()
-	{
-	}
+    function setUp()
+    {
+    }
 
 
-	function testSomething()
-	{
-		Assert::true(TRUE);
-	}
+    function testSomething()
+    {
+        Assert::true(TRUE);
+    }
 
 }
 

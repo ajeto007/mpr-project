@@ -1,0 +1,24 @@
+{
+  "name": "ajeto-mpr-project",
+  "version": "1.0.0",
+  "description": "Ajeto! - Projekt do předmětu MPR.",
+  "authors": [
+    "David Spilka"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "admin-lte": ">=2.3.0",
+    "nette-live-validation": ">=1.0.0",
+    "nette.ajax.js": ">=2.1.0",
+    "jquery": ">=1.7.0",
+    "bootstrap": ">=3.3.6",
+    "fontawesome": ">=4.5.0"
+  }
+}

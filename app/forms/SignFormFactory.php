@@ -5,58 +5,53 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
-
+use Tracy\Debugger;
 
 class SignFormFactory extends Nette\Object
 {
-	/** @var FormFactory */
-	private $factory;
+    /** @var User */
+    private $user;
 
-	/** @var User */
-	private $user;
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
 
+    /**
+     * @return Form
+     */
+    public function create()
+    {
+        $form = new Form;
+        $form->addText('email', 'E-mail:')
+            ->setRequired('Vložte prosím e-mail.')
+            ->setAttribute('placeholder', 'E-mail');
 
-	public function __construct(FormFactory $factory, User $user)
-	{
-		$this->factory = $factory;
-		$this->user = $user;
-	}
+        $form->addPassword('password', 'Heslo:')
+            ->setRequired('Vložte prosím heslo.')
+            ->setAttribute('placeholder', 'Heslo');
 
+        $form->addCheckbox('remember', ' Zůstat přihlášen');
 
-	/**
-	 * @return Form
-	 */
-	public function create()
-	{
-		$form = $this->factory->create();
-		$form->addText('username', 'Username:')
-			->setRequired('Please enter your username.');
+        $form->addSubmit('submit', 'Přihlásit se');
 
-		$form->addPassword('password', 'Password:')
-			->setRequired('Please enter your password.');
+        $form->onSuccess[] = array($this, 'formSucceeded');
+        return $form;
+    }
 
-		$form->addCheckbox('remember', 'Keep me signed in');
+    public function formSucceeded(Form $form, $values)
+    {
+        if ($values['remember']) {
+            $this->user->setExpiration('14 days', FALSE);
+        } else {
+            $this->user->setExpiration('20 minutes', TRUE);
+        }
 
-		$form->addSubmit('send', 'Sign in');
-
-		$form->onSuccess[] = array($this, 'formSucceeded');
-		return $form;
-	}
-
-
-	public function formSucceeded(Form $form, $values)
-	{
-		if ($values->remember) {
-			$this->user->setExpiration('14 days', FALSE);
-		} else {
-			$this->user->setExpiration('20 minutes', TRUE);
-		}
-
-		try {
-			$this->user->login($values->username, $values->password);
-		} catch (Nette\Security\AuthenticationException $e) {
-			$form->addError('The username or password you entered is incorrect.');
-		}
-	}
-
+        try {
+            $this->user->login($values['email'], $values['password']);
+        } catch (Nette\Security\AuthenticationException $e) {
+            $form->addError($e->getMessage());
+            Debugger::log($e);
+        }
+    }
 }
