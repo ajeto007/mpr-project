@@ -2,20 +2,20 @@
 
 namespace App\Model;
 
-use App\Model\Repository\UserRepository;
+use App\Model\Repository\EmployeeRepository;
 use Nette;
 use Nette\Security\Passwords;
 
 class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 {
-    /** @var UserRepository */
+    /** @var EmployeeRepository */
     private $userRepository;
 
     /**
      * UserManager constructor.
-     * @param UserRepository $userRepository
+     * @param EmployeeRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(EmployeeRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }

@@ -2,24 +2,24 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\User;
+use App\Model\Entity\Employee;
 use Kdyby\Doctrine\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class UserRepository extends AbstractRepository
+class EmployeeRepository extends AbstractRepository
 {
     /**
-     * UserRepository constructor.
+     * EmployeeRepository constructor.
      * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
     {
         parent::__construct($entityManager);
-        $this->entityRepository = $this->entityManager->getRepository(User::getClassName());
+        $this->entityRepository = $this->entityManager->getRepository(Employee::getClassName());
     }
 
     /**
-     * @return User[]
+     * @return Employee[]
      */
     public function getAll()
     {
@@ -28,7 +28,7 @@ class UserRepository extends AbstractRepository
 
     /**
      * @param $id
-     * @return User|null
+     * @return Employee|null
      */
     public function getById($id)
     {
@@ -37,7 +37,7 @@ class UserRepository extends AbstractRepository
 
     /**
      * @param $parameters
-     * @return User[]
+     * @return Employee[]
      */
     public function getByParameters($parameters)
     {
@@ -46,7 +46,7 @@ class UserRepository extends AbstractRepository
 
     /**
      * @param $parameters
-     * @return User|null
+     * @return Employee|null
      */
     public function getOneByParameters($parameters)
     {

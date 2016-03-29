@@ -24,7 +24,7 @@ extensions:
 services:
     - App\Forms\SignFormFactory
 
-    - App\Model\Repository\UserRepository
+    - App\Model\Repository\EmployeeRepository
 
     - App\Model\UserManager
 
