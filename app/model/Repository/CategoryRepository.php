@@ -2,24 +2,24 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Customer;
+use App\Model\Entity\Category;
 use Kdyby\Doctrine\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class CustomerRepository extends AbstractRepository
+class CategoryRepository extends AbstractRepository
 {
     /**
-     * CustomerRepository constructor.
+     * CategoryRepository constructor.
      * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
     {
         parent::__construct($entityManager);
-        $this->entityRepository = $this->entityManager->getRepository(Customer::getClassName());
+        $this->entityRepository = $this->entityManager->getRepository(Category::getClassName());
     }
 
     /**
-     * @return Customer[]
+     * @return Category[]
      */
     public function getAll()
     {
@@ -28,7 +28,7 @@ class CustomerRepository extends AbstractRepository
 
     /**
      * @param $id
-     * @return Customer|null
+     * @return Category|null
      */
     public function getById($id)
     {
@@ -37,7 +37,7 @@ class CustomerRepository extends AbstractRepository
 
     /**
      * @param $parameters
-     * @return Customer[]
+     * @return Category[]
      */
     public function getByParameters($parameters)
     {
@@ -46,7 +46,7 @@ class CustomerRepository extends AbstractRepository
 
     /**
      * @param $parameters
-     * @return Customer|null
+     * @return Category|null
      */
     public function getOneByParameters($parameters)
     {

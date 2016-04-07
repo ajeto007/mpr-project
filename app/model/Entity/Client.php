@@ -3,6 +3,7 @@
 namespace App\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -32,7 +33,7 @@ class Client extends AbstractEntity
     protected $phone;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $email;
     
@@ -49,7 +50,18 @@ class Client extends AbstractEntity
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $dic;    
+    protected $dic; 
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="client")
+     */
+    protected $projects;  
+    
+    public function __construct() 
+    {
+        parent::__construct();
+        $this->projects = new ArrayCollection();
+    }  
 
     /**
      * @return integer
@@ -177,5 +189,13 @@ class Client extends AbstractEntity
     public function setDic($dic)
     {
         $this->dic = $dic;
+    }
+    
+    /**
+     * @return Project[]
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -55,6 +56,17 @@ class Employee extends AbstractEntity
      * @ORM\Column(type="string")
      */
     protected $role;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Project", mappedBy="employees")
+     */
+    protected $projects;
+    
+    public function __construct() 
+    {
+        parent::__construct();
+        $this->projects = new ArrayCollection();
+    }
 
     /**
      * @return integer
@@ -153,7 +165,7 @@ class Employee extends AbstractEntity
     }
     
    /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getBirthday()
     {
@@ -161,7 +173,7 @@ class Employee extends AbstractEntity
     }
 
     /**
-     * @param DateTime $birthday
+     * @param \DateTime $birthday
      */
     public function setBirthday($birthday)
     {
@@ -198,5 +210,13 @@ class Employee extends AbstractEntity
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    /**
+     * @return Project[]
+     */    
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }
