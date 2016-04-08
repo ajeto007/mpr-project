@@ -1,0 +1,44 @@
+{block title}
+    Projekty
+    <button class="btn btn-default">Vytvořit projekt</button>
+{/block}
+
+{block breadcrumb}
+{/block}
+
+{block content}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-default">
+                <div class="box-body table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Datum přidání</th>
+                                <th>Popis</th>
+                                <th>Kategorie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>111</td>
+                                <td>30/03/2016</td>
+                                <td>Tady bude popis rizika.</td>
+                                <td>Technika</td>
+                                <td><a n:href="Projectview:" class="btn btn-default btn-sm">Zobrazit</a></td>
+                            </tr>
+                            <tr>
+                                <td>112</td>
+                                <td>31/03/2016</td>
+                                <td>Tady bude popis rizika.</td>
+                                <td>Kvalita</td>
+                                <td><a n:href="Projectview:" class="btn btn-default btn-sm">Zobrazit</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

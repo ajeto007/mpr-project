@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Administrace</title>
+    <title>MPR Projekt</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -37,7 +37,8 @@
     <!-- Custom javaScript -->
     <script src="{$basePath}/js/main.js"></script>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
+
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -45,9 +46,9 @@
         <!-- Logo -->
         <a n:href="Homepage:" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b></span>
+            <span class="logo-mini"><b>M</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Administrace</b></span>
+            <span class="logo-lg"><b>MPR Projekt</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -87,7 +88,7 @@
     <!-- =============================================== -->
 
     <!-- Left side column. contains the sidebar -->
-    <aside class="main-sidebar">
+    <aside class="left-side sidebar-offcanvas">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -95,6 +96,42 @@
                 <li>
                     <a n:href="Homepage:"><i class="fa fa-dashboard"></i> <span>Nástěnka</span></a>
                 </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span>Projekty</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="."><i class="fa fa-angle-double-right"></i> Vytvořit projekt</a></li>
+                        <li><a n:href="Projects:"><i class="fa fa-angle-double-right"></i> Projekty</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-th"></i>
+                        <span>Rizika</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="."><i class="fa fa-angle-double-right"></i>Přidat riziko</a></li>
+                        <li><a href="."><i class="fa fa-angle-double-right"></i>Rizika</a></li>
+                        <li><a href="."><i class="fa fa-angle-double-right"></i>Kategorie</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-edit"></i>
+                        <span>Firma</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="."><i class="fa fa-angle-double-right"></i>Přidat zaměstnance</a></li>
+                        <li><a href="."><i class="fa fa-angle-double-right"></i>Zaměstnanci</a></li>
+                        <li><a href="."><i class="fa fa-angle-double-right"></i>Souhrn rizik pro Firmu</a></li>
+                    </ul>
+                </li>
+                
             </ul>
         </section>
         <!-- /.sidebar -->
