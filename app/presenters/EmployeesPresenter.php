@@ -5,7 +5,6 @@ namespace App\Presenters;
 use Nette;
 use App\Model;
 
-
 class EmployeesPresenter extends BasePresenter
 {
 
