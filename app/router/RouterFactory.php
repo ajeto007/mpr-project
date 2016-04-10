@@ -20,7 +20,26 @@ class RouterFactory
 
         $router[] = new Route('odhlasit', 'Sign:out');
 
-        $router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+        $router[] = new Route('<presenter>/<action>[/<id>]', array(
+            'presenter' => array(
+                Route::VALUE => 'Homepage',
+                Route::FILTER_TABLE => array(
+                    'zamestnanci' => 'Employees',
+                    'projekty' => 'Projects',
+                    'rizika' => 'Risks'
+                )
+            ),
+            'action' => array(
+                Route::VALUE => 'default',
+                Route::FILTER_TABLE => array(
+                    'pridat' => 'add',
+                    'vytvorit' => 'create',
+                    'detail' => 'detail',
+                    'kategorie' => 'categories'
+                )
+            ),
+            'id' => null,
+        ));
 
         return $router;
     }
