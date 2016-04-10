@@ -9,22 +9,20 @@
 
 /* skin-black navbar */
 .skin-black {
-  .treeview {
-  }
   //Navbar & Logo
   .main-header {
     .box-shadow(0px 1px 1px rgba(0, 0, 0, 0.05));
     .navbar-toggle {
-      color: #fff;
+      color: #333;
     }
     .navbar-brand {
-      color: #fff;
+      color: #333;
       border-right: 1px solid #eee;
     }
     > .navbar {
-      .navbar-variant(#222D32; #4e565a; #fff; #222D32);
+      .navbar-variant(#fff; #333; #999; #fff);
       > .sidebar-toggle {
-        color: #fff;
+        color: #333;
         border-right: 1px solid #eee;
       }
       .navbar-nav {
@@ -36,7 +34,6 @@
       .navbar-right {
         > li {
           > a {
-            color: #fff;
             border-left: 1px solid #eee;
             border-right-width: 0;
           }
@@ -44,7 +41,7 @@
       }
     }
     > .logo {
-      .logo-variant(#222D32; #fff);
+      .logo-variant(#fff; #333);
       border-right: 1px solid #eee;
       @media (max-width: @screen-header-collapse) {
         .logo-variant(#222; #fff);
@@ -64,4 +61,14 @@
   }
   //Create the sidebar skin
   .skin-dark-sidebar(#fff);
+
+  .pace {
+    .pace-progress {
+      background: #222;
+    }
+    .pace-activity {
+      border-top-color: #222;
+      border-left-color: #222;
+    }
+  }
 }
