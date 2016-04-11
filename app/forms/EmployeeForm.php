@@ -2,21 +2,24 @@
 
 namespace App\Forms;
 
+use App\Model\Entity\Address;
+use App\Model\Repository\EmployeeRepository;
 use Nette;
 use Nette\Application\UI\Form;
-use Nette\Security\User;
 use App\Model\Entity\Employee;
+use Nette\Security\Passwords;
+use Nette\Utils\Random;
 use Tracy\Debugger;
 
 class EmployeeForm extends Nette\Object
 {
-    /** @var \App\Model\Repository\EmployeeRepository */
+    /** @var EmployeeRepository */
     public $employeeRepository;
 
-	public function __construct(\App\Model\Repository\EmployeeRepository $employeeRepository)
-	{
-		$this->employeeRepository = $employeeRepository;
-	}
+    public function __construct(EmployeeRepository $employeeRepository)
+    {
+        $this->employeeRepository = $employeeRepository;
+    }
 
     public function create()
     {
@@ -26,9 +29,6 @@ class EmployeeForm extends Nette\Object
             ->addRule(Form::PATTERN, 'Zadej validní email', '[a-zA-Z0-9\.\-_]+@[0-9a-zA-Z\.\-]+\.[a-z]+')
             ->setAttribute('class', 'form-control');
         $form->addText('name', 'Jméno')
-            ->addRule(Form::FILLED)
-            ->setAttribute('class', 'form-control');
-        $form->addPassword('password', 'Heslo')
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
         $form->addText('phone', 'Telefon')
@@ -60,26 +60,22 @@ class EmployeeForm extends Nette\Object
         $form->addSubmit('submit', 'Odeslat')
             ->setAttribute('class', 'btn btn-default');
 
-		$form->addHidden('id');
+        $form->addHidden('id');
 
-        $control->onSuccess[] = $this->processForm;
+        $form->onSuccess[] = array($this, 'processForm');
         return $form;
     }
 
-	public function processForm($form)
-	{
-        $values = $form->getValues();
-
-		if($values->id)
-		{
-			$employee = $this->employeeRepository->getById($values->id);
-			$address = $employee->getAddress();
-		}
-		else
-		{
-			$address = new Address();
-			$employee = new Employee();
-		}
+    public function processForm(Form $form, $values)
+    {
+        if($values->id) {
+            $employee = $this->employeeRepository->getById($values->id);
+            $address = $employee->getAddress();
+        } else {
+            $address = new Address();
+            $employee = new Employee();
+            $employee->setPassword(Passwords::hash(Random::generate()));
+        }
     
         $address->setStreet($values->street);
         $address->setPostcode($values->postcode);
@@ -88,22 +84,22 @@ class EmployeeForm extends Nette\Object
         $employee->setEmail($values->email);
         $employee->setName($values->name);
         $employee->setAddress($address);
-        $employee->setPassword(Passwords::hash($values->password));
         $employee->setBirthday(new \DateTime($values->birthday));
         $employee->setPhone($values->phone); 
         $employee->setRole($values->role);
         $employee->setPosition($values->position);
 
-		if($values->id)
-		{
-			$this->employeeRepository->update($employee);
-			$this->employeeRepository->update($address);
-		}
-		else
-		{
-			$this->employeeRepository->insert($employee);
-			$this->employeeRepository->insert($address); 
-		}
-	}
-
+        try {
+            if ($values->id) {
+                $this->employeeRepository->update($employee);
+                $this->employeeRepository->update($address);
+            } else {
+                $this->employeeRepository->insert($employee);
+                $this->employeeRepository->insert($address);
+            }
+        } catch (\Exception $e) {
+            Debugger::log($e);
+            $form->addError($e->getMessage());
+        }
+    }
 }
