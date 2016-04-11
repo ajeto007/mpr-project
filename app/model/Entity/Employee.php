@@ -48,14 +48,15 @@ class Employee extends AbstractEntity
     protected $birthday;
     
     /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+     * @ORM\Column(type="enum", columnDefinition="enum('programator', 'uklizecka') NOT NULL")
+    */
     protected $position;
-    
+    public static $positions = array('programator' => 'Programátor', 'uklizecka' => 'Uklízečka');
     /**
-     * @ORM\Column(type="string")
-     */
+     * @ORM\Column(type="enum", columnDefinition="enum('vedouci', 'podrizeny') NOT NULL")
+    */
     protected $role;
+    public static $roles = array('vedouci' => 'Vedoucí', 'podrizeny' => 'Podřízený');
     
     /**
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="employees")

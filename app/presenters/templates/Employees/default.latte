@@ -1,7 +1,6 @@
 {block title}
     Zaměstnanci
     <a n:href="Employees:add" class="btn btn-default">Přidat zaměstnance</a>
-    <a class="btn btn-default">Smazat zaměstnance</a>
 {/block}
 
 {block breadcrumb}
@@ -24,22 +23,17 @@
                             </tr>
                         </thead>
                         <tbody>
+							{foreach $employees as $emp}
                             <tr>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
+                                <td>{$emp->getName()}</td>
+                                <td>{$emp->getPosition()}</td>
+                                <td>{$emp->getEmail()}</td>
+                                <td>{$emp->getPhone()}</td>
+                                <td>{$emp->getAddress()->getCity()}</td>
+                                <td><a href="{$presenter->link('edit', $emp->getId())}">Upravit</a></td>
+                                <td><a href="{$presenter->link('delete', $emp->getId())}">Smazat</a></td>
                             </tr>
-                            <tr>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                                <td>text</td>
-                            </tr>
+							{/foreach}
                         </tbody>
                     </table>
                 </div>
