@@ -11,7 +11,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         parent::startup();
         if (!$this->user->isLoggedIn()) {
-            if ($this->getName() == 'Sign' && in_array($this->getAction(), array('in', 'out'))) {
+            if ($this->getName() == 'Sign' && in_array($this->getAction(), array('in', 'out', 'forgottenPassword'))) {
                 return;
             } else {
                 $this->redirect('Sign:in');

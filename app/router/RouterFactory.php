@@ -18,6 +18,8 @@ class RouterFactory
 
         $router[] = new Route('prihlasit', 'Sign:in');
 
+        $router[] = new Route('zapomenute-heslo', 'Sign:forgottenPassword');
+        
         $router[] = new Route('odhlasit', 'Sign:out');
 
         $router[] = new Route('<presenter>/<action>[/<id>]', array(

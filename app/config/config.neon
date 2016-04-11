@@ -3,6 +3,15 @@
 # https://nette.org/security-warning
 #
 parameters:
+    # patří do config.local.neon, ale aby se to všem hned nerozbilo, tak je to dočasně tu
+    # všechny emaily budou teda chodit do mého (David Spilka) mailtrapu
+    mail:
+        smtp: true
+        host: mailtrap.io
+        port: 25
+        username: 444228b228b396a28
+        password: 95c0e1ff524b8c
+        secure: tls
 
 php:
     date.timezone: Europe/Prague
@@ -22,6 +31,9 @@ extensions:
     doctrine: Kdyby\Doctrine\DI\OrmExtension
 
 services:
+    - Nette\Mail\SmtpMailer(%mail%)
+
+    - App\Forms\ForgottenPasswordFormFactory
     - App\Forms\SignFormFactory
     - App\Forms\EmployeeForm
 
