@@ -10,12 +10,13 @@ use Tracy\Debugger;
 
 class EmployeeForm extends Nette\Object
 {
-    private $entityManager;
-    
-    public function __construct(\Doctrine\ORM\EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    /** @var \App\Model\Repository\EmployeeRepository */
+    public $employeeRepository;
+
+	public function __construct(\App\Model\Repository\EmployeeRepository $employeeRepository)
+	{
+		$this->employeeRepository = $employeeRepository;
+	}
 
     public function create()
     {
@@ -56,10 +57,53 @@ class EmployeeForm extends Nette\Object
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
         //
-        $form->addSubmit('submit', 'Vložit')
+        $form->addSubmit('submit', 'Odeslat')
             ->setAttribute('class', 'btn btn-default');
 
+		$form->addHidden('id');
+
+        $control->onSuccess[] = $this->processForm;
         return $form;
     }
+
+	public function processForm($form)
+	{
+        $values = $form->getValues();
+
+		if($values->id)
+		{
+			$employee = $this->employeeRepository->getById($values->id);
+			$address = $employee->getAddress();
+		}
+		else
+		{
+			$address = new Address();
+			$employee = new Employee();
+		}
+    
+        $address->setStreet($values->street);
+        $address->setPostcode($values->postcode);
+        $address->setCity($values->city);
+
+        $employee->setEmail($values->email);
+        $employee->setName($values->name);
+        $employee->setAddress($address);
+        $employee->setPassword(Passwords::hash($values->password));
+        $employee->setBirthday(new \DateTime($values->birthday));
+        $employee->setPhone($values->phone); 
+        $employee->setRole($values->role);
+        $employee->setPosition($values->position);
+
+		if($values->id)
+		{
+			$this->employeeRepository->update($employee);
+			$this->employeeRepository->update($address);
+		}
+		else
+		{
+			$this->employeeRepository->insert($employee);
+			$this->employeeRepository->insert($address); 
+		}
+	}
 
 }
