@@ -2,6 +2,7 @@
 
 namespace App\Model\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -48,7 +49,7 @@ class Project extends AbstractEntity
     protected $toDate;
     
     /**
-     * @ORM\OneToMany(targetEntity="ProjectRisk", mappedBy="project", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Risk", mappedBy="project", cascade={"persist", "remove"})
      */    
     protected $risks;
     
@@ -100,7 +101,7 @@ class Project extends AbstractEntity
     }
 
     /**
-     * @param string $name
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -108,7 +109,7 @@ class Project extends AbstractEntity
     }
     
     /**
-     * @return Employee[]
+     * @return ArrayCollection|Employee[]
      */
     public function getEmployees()
     {
@@ -116,7 +117,7 @@ class Project extends AbstractEntity
     }
 
    /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFromDate()
     {
@@ -124,7 +125,7 @@ class Project extends AbstractEntity
     }
 
     /**
-     * @param \DateTime $fromDate
+     * @param DateTime $fromDate
      */
     public function setFromDate($fromDate)
     {
@@ -132,7 +133,7 @@ class Project extends AbstractEntity
     }
     
    /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getToDate()
     {
@@ -140,7 +141,7 @@ class Project extends AbstractEntity
     }
 
     /**
-     * @param \DateTime $toDate
+     * @param DateTime $toDate
      */
     public function setToDate($toDate)
     {
@@ -164,7 +165,7 @@ class Project extends AbstractEntity
     }
 
     /**
-     * @return Risk[]
+     * @return ArrayCollection|Risk[]
      */
     public function getRisks()
     {

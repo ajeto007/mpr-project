@@ -136,7 +136,7 @@ class Client extends AbstractEntity
     }
 
     /**
-     * @param Address $name
+     * @param Address $address
      */
     public function setAddress($address)
     {
@@ -184,7 +184,7 @@ class Client extends AbstractEntity
     }
 
     /**
-     * @param string $ico
+     * @param string $dic
      */
     public function setDic($dic)
     {
@@ -192,7 +192,7 @@ class Client extends AbstractEntity
     }
     
     /**
-     * @return Project[]
+     * @return ArrayCollection|Project[]
      */
     public function getProjects()
     {

@@ -93,7 +93,7 @@ class Category extends AbstractEntity
     }
     
     /**
-     * @return Risk[]
+     * @return ArrayCollection|Risk[]
      */
     public function getRisks()
     {
@@ -101,7 +101,7 @@ class Category extends AbstractEntity
     }
 
     /**
-     * @return Category[]
+     * @return ArrayCollection|Category[]
      */
     public function getDescendants()
     {

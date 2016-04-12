@@ -142,7 +142,7 @@ class Employee extends AbstractEntity
     }
 
     /**
-     * @param Address $name
+     * @param Address $address
      */
     public function setAddress($address)
     {
@@ -206,7 +206,7 @@ class Employee extends AbstractEntity
     }
 
     /**
-     * @param string $position
+     * @param string $role
      */
     public function setRole($role)
     {
@@ -214,7 +214,7 @@ class Employee extends AbstractEntity
     }
 
     /**
-     * @return Project[]
+     * @return ArrayCollection|Project[]
      */    
     public function getProjects()
     {
