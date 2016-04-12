@@ -19,12 +19,12 @@
                                 <th>E-mail</th>
                                 <th>Telefon</th>
                                 <th>Adresa</th>
-								<th></th>
-								<th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-							{foreach $employees as $emp}
+                            {foreach $employees as $emp}
                             <tr>
                                 <td>{$emp->getName()}</td>
                                 <td>{$emp->getPosition()}</td>
@@ -34,7 +34,7 @@
                                 <td><a href="{$presenter->link('edit', $emp->getId())}">Upravit</a></td>
                                 <td><a href="{$presenter->link('delete', $emp->getId())}">Smazat</a></td>
                             </tr>
-							{/foreach}
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>

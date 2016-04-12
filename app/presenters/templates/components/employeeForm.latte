@@ -1,21 +1,21 @@
 <form role="form" n:name=$form>
-	<div class="row">
-		<div class="col-lg-8">
-			<div class="box box-primary">
-				<div class="box-body">
-					{foreach $form->controls as $input}
-						{continueIf $input->name == 'submit'}
-						<div class="form-group">
-							<label>{label $input /}</label>
-							{if isset($input->options['description'])}
-								{$input->options['description']}
-							{/if}
-							{input $input}
-						</div>
-					{/foreach}
-				</div>
-			</div>
-		</div>
-	</div>
-	{input submit}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="box box-primary">
+                <div class="box-body">
+                    {foreach $form->controls as $input}
+                        {continueIf $input->name == 'submit'}
+                        <div class="form-group">
+                            <label>{label $input /}</label>
+                            {if isset($input->options['description'])}
+                                {$input->options['description']}
+                            {/if}
+                            {input $input}
+                        </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+    {input submit}
 </form>
