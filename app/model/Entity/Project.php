@@ -37,6 +37,11 @@ class Project extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="projects")
      */
     protected $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Employee")
+     */
+    protected $leader;
     
     /**
      * @ORM\Column(type="date", nullable=true)
