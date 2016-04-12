@@ -48,19 +48,22 @@ class Risk extends AbstractEntity
     protected $reaction;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="enum", columnDefinition="enum('nepatrna', 'mala', 'stredni', 'velka', 'mimoradna') NOT NULL")
      */
     protected $probability;
+    public static $probabilityEnum = array('nepatrna' => 'Nepatrná', 'mala' => 'Malá', 'stredni' => 'Střední', 'velka' => 'Velká', 'mimoradna' => 'Mimořádně velká');
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="enum", columnDefinition="enum('nepatrne', 'male', 'citelne', 'kriticke', 'katastroficke') NOT NULL")
      */
     protected $impacts;
+    public static $impactsEnum = array('nepatrne' => 'Nepatrné', 'male' => 'Malé', 'citelne' => 'Citelné', 'kriticke' => 'Kritické', 'katastroficke' => 'Katastrofické');
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="enum", columnDefinition="enum('neaktivni', 'aktivni') NOT NULL")
      */
     protected $state;
+    public static $stateEnum = array('neaktivni' => 'Neaktivní', 'aktivni' => 'Aktivní');
 
     /**
      * @ORM\Column(type="datetime")

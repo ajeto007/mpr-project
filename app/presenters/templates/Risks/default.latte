@@ -15,26 +15,24 @@
                         <thead>
                             <tr>
                                 <th>Označení</th>
-                                <th>Datum přidání</th>
+                                <th>Název</th>
                                 <th>Popis</th>
                                 <th>Kategorie</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {foreach $risks as $r}
                             <tr>
-                                <td>RIZ-23</td>
-                                <td>30/03/2016</td>
-                                <td>Tady bude popis rizika.</td>
-                                <td>Technika</td>
-                                <td><a n:href="Risks:detail" class="btn btn-default btn-sm">Zobrazit</a></td>
+                                <td>{$r->getId()}</td>
+                                <td>{$r->getName()}</td>
+                                <td>{$r->getDescription()}</td>
+                                <td>{$r->getCategory()->getName()}</td>
+                                <td><a href="{$presenter->link('edit', $r->getId())}">Upravit</a></td>
+                                <td><a href="{$presenter->link('delete', $r->getId())}">Smazat</a></td>
                             </tr>
-                            <tr>
-                                <td>KON-01</td>
-                                <td>31/03/2016</td>
-                                <td>Tady bude popis rizika.</td>
-                                <td>Kvalita</td>
-                                <td><a n:href="Risks:detail" class="btn btn-default btn-sm">Zobrazit</a></td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>

@@ -15,20 +15,17 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kategorie</th>
-                                <th>Popis</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {foreach $categories as $c}
                             <tr>
-                                <td>111</td>
-                                <td>Technika</td>
-                                <td>Tady bude popis kategorie.</td>
+                                <td>{$c->getId()}</td>
+                                <td>{$c->getName()}</td>
                             </tr>
-                            <tr>
-                                <td>112</td>
-                                <td>Kvalita</td>
-                                <td>Tady bude popis kategorie.</td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>

@@ -36,6 +36,7 @@ services:
     - App\Forms\ForgottenPasswordFormFactory
     - App\Forms\SignFormFactory
     - App\Forms\EmployeeForm
+    - App\Forms\RiskForm
 
     - App\Model\Repository\EmployeeRepository
     - App\Model\Repository\CategoryRepository

@@ -1,102 +1,12 @@
 
 
 {block title}
-    Nové riziko
+    Přidat riziko
 {/block}
 
 {block breadcrumb}
 {/block}
 
 {block content}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <form role="form">
-                        <div class="form-group">
-                              <label>Označení</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <div class="form-group">
-                              <label>Jméno</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <div class="form-group">
-                              <label>Popis</label>
-                              <textarea class="form-control" rows="3" placeholder="Vyplnit"></textarea>
-                        </div>
-                        <div class="form-group">
-                              <label>Vlastník</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Kategorie</label>
-                            <select class="form-control">
-                                <option>Kategorie 1</option>
-                                <option>Kategorie 2</option>
-                                <option>Kategorie 3</option>
-                                <option>Kategorie 4</option>
-                                <option>Kategorie 5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                              <label>Stav</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <label>Datum identifikace</label>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right" id="reservation"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <form role="form">
-                        <div class="form-group">
-                              <label>Hrozba</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <div class="form-group">
-                              <label>Spouštěč</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <div class="form-group">
-                              <label>Opatření</label>
-                              <input type="text" class="form-control" placeholder="Vyplnit"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Pravděpodobnost</label>
-                            <select class="form-control">
-                                <option>Nepatrná</option>
-                                <option>Malá</option>
-                                <option>Střední</option>
-                                <option>Velká</option>
-                                <option>Mimořádně velká</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Dopady</label>
-                            <select class="form-control">
-                                <option>Nepatrné</option>
-                                <option>Malé</option>
-                                <option>Citelné</option>
-                                <option>Kritické</option>
-                                <option>Katastrofické</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <button class="btn btn-default">Vytvořit riziko</button>
-    <button class="btn btn-default">Zrušit</button>
+    {include '../components/riskForm.latte', form => riskForm }
 {/block}
