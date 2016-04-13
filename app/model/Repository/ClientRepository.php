@@ -52,4 +52,17 @@ class ClientRepository extends AbstractRepository
     {
         return parent::getOneByParameters($parameters);
     }
+
+    /**
+     * @param Client[] $entities
+     * @return array
+     */
+    public static function getIdIndexedArrayOfNames($entities)
+    {
+        $result = array();
+        foreach($entities as $entity) {
+            $result[$entity->getId()] = $entity->getCompanyName();
+        }
+        return $result;
+    }
 }

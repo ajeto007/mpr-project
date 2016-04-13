@@ -1,18 +1,17 @@
 
 
 {block title}
-    Jmeno projektu
+    {$project->getName()}
 {/block}
 
 {block breadcrumb}
-    <li class="active"><a n:href="."><i class="fa fa-edit"></i>Upravit projekt</a></li>
 {/block}
 
 {block content}
-    Vedouci projektu: <b>Jmeno</b></p>
-    <p>Klient: <b>Jmeno</b></p>
-    <p>Datum začátku: <b>30/03/2016</b></p>
-    <p>Datum konce: <b>05/06/2016</b></p>
+    Vedouci projektu: <b>{if $project->getLeader()!=null}{$project->getLeader()->getName()}{/if}</b></p>
+    <p>Klient: <b>{if $project->getClient()!=null}{$project->getClient()->getCompanyName()}{/if}</b></p>
+    <p>Datum začátku: <b>{$project->getFromDate()->format('/d/m/Y')}</b></p>
+    <p>Datum konce: <b>{$project->getToDate()->format('/d/m/Y')}</b></p>
     <div class="row">
         <div class="col-lg-8">
             <div class="box box-default">
@@ -25,12 +24,11 @@
                 <div class="box-body table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <tbody>
+                            {foreach $project->getRisks() as $risk}
                             <tr>
-                                <td>1. Riziko</td>
+                                <td>{$risk->getName()}</td>
                             </tr>
-                            <tr>
-                                <td>2. Riziko</td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>
@@ -44,12 +42,11 @@
                 <div class="box-body table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <tbody>
+                            {foreach $project->getEmployees() as $employee}
                             <tr>
-                                <td>1. Uživatel</td>
+                                <td>{$employee->getName()}</td>
                             </tr>
-                            <tr>
-                                <td>2. Uživatel</td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>

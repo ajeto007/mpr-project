@@ -170,6 +170,22 @@ class Project extends AbstractEntity
     }
 
     /**
+     * @return Employee
+     */
+    public function getLeader()
+    {
+        return $this->leader;
+    }
+
+    /**
+     * @param Employee $leader
+     */
+    public function setLeader($leader)
+    {
+        $this->leader = $leader;
+    }
+
+    /**
      * @return ArrayCollection|Risk[]
      */
     public function getRisks()

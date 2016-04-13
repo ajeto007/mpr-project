@@ -15,26 +15,28 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Datum přidání</th>
-                                <th>Popis</th>
-                                <th>Kategorie</th>
+                                <th>Název</th>
+                                <th>Datum začátku</th>
+                                <th>Datum konce</th>
+                                <th>Vedoucí</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {foreach $projects as $p}
                             <tr>
-                                <td>111</td>
-                                <td>30/03/2016</td>
-                                <td>Tady bude popis rizika.</td>
-                                <td>Technika</td>
-                                <td><a n:href="Projects:detail" class="btn btn-default btn-sm">Zobrazit</a></td>
+                                <td>{$p->getId()}</td>
+                                <td>{$p->getName()}</td>
+                                <td>{$p->getFromDate()->format('d/m/Y')}</td>
+                                <td>{$p->getToDate()->format('d/m/Y')}</td>
+                                <td>{if ($p->getLeader()!=null)} {$p->getLeader()->getName()} {/if}</td>
+                                <td>
+                                    <a n:href="Projects:detail id => $p->getId()" class="btn btn-default btn-sm">Zobrazit</a>
+                                    <a n:href="Projects:edit id => $p->getId()" class="btn btn-default btn-sm">Upravit</a>
+                                    <a n:href="Projects:delete id => $p->getId()" class="btn btn-default btn-sm">Smazat</a>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>112</td>
-                                <td>31/03/2016</td>
-                                <td>Tady bude popis rizika.</td>
-                                <td>Kvalita</td>
-                                <td><a n:href="Projects:detail" class="btn btn-default btn-sm">Zobrazit</a></td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>
