@@ -22,24 +22,34 @@
                     </div>
                     <div class="form-group">
                         {label fromDate/} {$form['fromDate']->options['description']}
-                        <span class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            {input fromDate, class => 'form-control pull-right show-error-apart', id => 'fromdate'}
-                        </span>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            {input toDate, class => 'form-control pull-right show-error-apart', id => 'fromdate'}
+                        </div>
                         <div id="error-container_fromdate"></div>
                     </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker1').datetimepicker();
+                        });
+                    </script>
                     <div class="form-group">
                         {label toDate/} {$form['toDate']->options['description']}
-                        <span class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
+                        <div class='input-group date' id='datetimepicker2'>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                             {input toDate, class => 'form-control pull-right show-error-apart', id => 'todate'}
-                        </span>
+                        </div>
                         <div id="error-container_todate"></div>
                     </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker2').datetimepicker();
+                        });
+                    </script>
                 </div>
             </div>
         </div>
