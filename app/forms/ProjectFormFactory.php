@@ -53,15 +53,16 @@ class ProjectFormFactory extends Nette\Object
             ->setRequired('Vyberte prosím zadavatele (klienta) pro tento projekt.');
 
         $form->addText('fromDate', 'Datum začátku')
-            ->addRule(Form::PATTERN, 'Zadejte prosím validní datum', '[0-9]{4}-[0-9]{2}-[0-9]{2}')
+            ->addRule(Form::PATTERN, 'Zadejte prosím validní datum', '[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{1,2}:[0-9]{2} [AP]M')
             ->addRule(ValidationFormRules::IS_DATE, 'Zadané datum není validní.')
             ->setRequired('Vložte prosím datum začátku projektu.')
-            ->setOption('description', '(yyyy-mm-dd)');
+            ->setOption('description', '(mm/dd/yyyy)');
 
         $form->addText('toDate', 'Datum konce')
-            ->addRule(Form::PATTERN, 'Zadejte prosím validní datum', '[0-9]{4}-[0-9]{2}-[0-9]{2}')
+            ->addRule(Form::PATTERN, 'Zadejte prosím validní datum', '[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{1,2}:[0-9]{2} [AP]M')
+            ->addRule(ValidationFormRules::IS_DATE, 'Zadané datum není validní.')
             ->setRequired('Vložte prosím datum konce projektu.')
-            ->setOption('description', '(yyyy-mm-dd)');
+            ->setOption('description', '(mm/dd/yyyy)');
 
         $form->addCheckboxList('employees', 'Uživatelé', $employees);
 

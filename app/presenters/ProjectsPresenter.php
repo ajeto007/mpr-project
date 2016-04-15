@@ -44,8 +44,8 @@ class ProjectsPresenter extends BasePresenter
     {
         $risk = $this->projectRepository->getById($id);
         $data = $risk->getAsArray();
-        $data['fromDate'] = $data['fromDate']->format('Y-m-d');
-        $data['toDate'] = $data['toDate']->format('Y-m-d');
+        $data['fromDate'] = $data['fromDate']->format('m/d/Y h:i A');
+        $data['toDate'] = $data['toDate']->format('m/d/Y h:i A');
         $this['projectForm']->setDefaults($data);
     }
 

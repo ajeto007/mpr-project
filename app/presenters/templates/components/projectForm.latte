@@ -22,12 +22,12 @@
                     </div>
                     <div class="form-group">
                         {label fromDate/} {$form['fromDate']->options['description']}
-                        <div class='input-group date' id='datetimepicker1'>
+                        <span class='input-group date' id='datetimepicker1'>
                             <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                                <i class="glyphicon glyphicon-calendar"></i>
                             </span>
-                            {input toDate, class => 'form-control pull-right show-error-apart', id => 'fromdate'}
-                        </div>
+                            {input fromDate, class => 'form-control pull-right show-error-apart', id => 'fromdate'}
+                        </span>
                         <div id="error-container_fromdate"></div>
                     </div>
                     <script type="text/javascript">
@@ -37,12 +37,12 @@
                     </script>
                     <div class="form-group">
                         {label toDate/} {$form['toDate']->options['description']}
-                        <div class='input-group date' id='datetimepicker2'>
+                        <span class='input-group date' id='datetimepicker2'>
                             <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                                <i class="glyphicon glyphicon-calendar"></i>
                             </span>
                             {input toDate, class => 'form-control pull-right show-error-apart', id => 'todate'}
-                        </div>
+                        </span>
                         <div id="error-container_todate"></div>
                     </div>
                     <script type="text/javascript">

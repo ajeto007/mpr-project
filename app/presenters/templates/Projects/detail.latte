@@ -10,8 +10,8 @@
 {block content}
     Vedouci projektu: <b>{if $project->getLeader()!=null}{$project->getLeader()->getName()}{/if}</b></p>
     <p>Klient: <b>{if $project->getClient()!=null}{$project->getClient()->getCompanyName()}{/if}</b></p>
-    <p>Datum začátku: <b>{$project->getFromDate()->format('/d/m/Y')}</b></p>
-    <p>Datum konce: <b>{$project->getToDate()->format('/d/m/Y')}</b></p>
+    <p>Datum začátku: <b>{$project->getFromDate()->format('d/m/Y')}</b></p>
+    <p>Datum konce: <b>{$project->getToDate()->format('d/m/Y')}</b></p>
     <div class="row">
         <div class="col-lg-8">
             <div class="box box-primary">
