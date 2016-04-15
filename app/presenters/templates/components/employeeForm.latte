@@ -10,7 +10,26 @@
                             {if isset($input->options['description'])}
                                 {$input->options['description']}
                             {/if}
-                            {input $input}
+                            {if $input->name == 'birthday'}
+                                <div class='input-group date' id='datetimepicker3'>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                    {input $input, class => 'form-control pull-right', id => '$input'}
+                                    
+                                </div>
+                                <div id="error-container_todate"></div>
+                            {elseif $input->name == 'phone'}
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    {input $input, class => 'form-control', id => 'data-mask', data-inputmask => '"mask": "999 999 999"'}
+                                </div>
+                            {else}
+                                {input $input}
+                            {/if}
+                            
                         </div>
                     {/foreach}
                 </div>
@@ -19,3 +38,9 @@
     </div>
     {input submit}
 </form>
+<script type="text/javascript">
+    $(function () {
+        $("#data-mask").inputmask();
+        $('#datetimepicker3').datetimepicker();
+    });
+</script>
