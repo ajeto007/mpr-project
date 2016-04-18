@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\DataGrids\EmployeeDataGrid;
 use Nette;
 use App\Model;
 use App\Forms\EmployeeForm;
@@ -13,6 +14,8 @@ class EmployeesPresenter extends BasePresenter
     public $employeeRepository;
     /** @var EmployeeForm @inject */
     public $employeeFormFactory;
+    /** @var EmployeeDataGrid @inject */
+    public $employeeDataGrid;
 
     public function renderDefault()
     {
@@ -62,6 +65,12 @@ class EmployeesPresenter extends BasePresenter
         $control = $this->employeeFormFactory->create();
         $control->onSuccess[] = array($this, 'formSuccess');
         $control->onError[] = array($this, 'formError');
+        return $control;
+    }
+
+    protected function createComponentEmployeeDataGrid()
+    {
+        $control = $this->employeeDataGrid->create();
         return $control;
     }
 }
