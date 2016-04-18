@@ -1,0 +1,13 @@
+{extends $original_template}
+
+{block detail}
+    <h2>{$item->name}</h2>
+    <p>
+        <strong>E-mail: </strong>{$item->email}<br>
+        <strong>Telefon: </strong>{$item->phone}<br>
+        <strong>Datum narození: </strong>{$item->birthday|date:'j.n.Y'}<br>
+        <strong>Adresa: </strong>{$item->address->street}, {$item->address->postcode} {$item->address->city}<br>
+        <strong>Pozice: </strong>{$item->position}<br>
+        <strong>Role: </strong>{$item->role}<br>
+    </p>
+{/block}

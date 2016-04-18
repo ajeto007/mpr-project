@@ -33,11 +33,14 @@ extensions:
 services:
     - Nette\Mail\SmtpMailer(%mail%)
 
+    - App\DataGrids\EmployeeDataGrid
+
     - App\Forms\ForgottenPasswordFormFactory
     - App\Forms\SignFormFactory
     - App\Forms\EmployeeForm
     - App\Forms\RiskForm
     - App\Forms\ProjectFormFactory
+
     - App\Model\Repository\EmployeeRepository
     - App\Model\Repository\CategoryRepository
     - App\Model\Repository\RiskRepository
