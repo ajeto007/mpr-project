@@ -28,7 +28,8 @@ class RouterFactory
                 Route::FILTER_TABLE => array(
                     'zamestnanci' => 'Employees',
                     'projekty' => 'Projects',
-                    'rizika' => 'Risks'
+                    'rizika' => 'Risks',
+                    'klienti' => 'Clients'
                 )
             ),
             'action' => array(

@@ -37,6 +37,7 @@ services:
     - App\Forms\SignFormFactory
     - App\Forms\EmployeeForm
     - App\Forms\RiskForm
+    - App\Forms\ClientFormFactory
     - App\Forms\ProjectFormFactory
     - App\Model\Repository\EmployeeRepository
     - App\Model\Repository\CategoryRepository
