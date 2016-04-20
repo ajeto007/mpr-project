@@ -1,0 +1,17 @@
+{extends $original_template}
+
+{block detail}
+    <h2>{$item->name}</h2>
+    <p>
+        <strong>Vedoucí projektu: </strong>{if $item->getLeader()!=null}{$item->getLeader()->getName()}{/if}<br>
+        <strong>Klient: </strong>{if $item->getClient()!=null}{$item->getClient()->getCompanyName()}{/if}<br>
+        <strong>Datum začátku: </strong>{$item->getFromDate()->format('d/m/Y')}<br>
+        <strong>Datum konce: </strong>{$item->getToDate()->format('d/m/Y')}<br>
+    </p>
+    <p>
+        <strong>Rizika: </strong>{foreach $item->getRisks() as $risk}{if !$iterator->first}, {/if}{$risk->getName()}{/foreach}<br>
+    </p>
+    <p>
+        <strong>Zaměstnanci: </strong>{foreach $item->getEmployees() as $employee}{if !$iterator->first}, {/if}{$employee->getName()}{/foreach}<br>
+    </p>
+{/block}

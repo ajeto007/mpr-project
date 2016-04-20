@@ -25,6 +25,7 @@ services:
     - Nette\Mail\SmtpMailer(%mail%)
 
     - App\DataGrids\EmployeeDataGrid
+    - App\DataGrids\ProjectDataGrid
 
     - App\Forms\ForgottenPasswordFormFactory
     - App\Forms\SignFormFactory

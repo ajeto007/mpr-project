@@ -6,6 +6,7 @@ use App\Forms\ProjectFormFactory;
 use App\Model\Repository\ProjectRepository;
 use Nette;
 use App\Model;
+use App\DataGrids\ProjectDataGrid;
 
 class ProjectsPresenter extends BasePresenter
 {
@@ -14,6 +15,9 @@ class ProjectsPresenter extends BasePresenter
 
     /** @var ProjectRepository @inject */
     public $projectRepository;
+
+    /** @var ProjectDataGrid @inject */
+    public $projectDataGrid;
 
     public function renderDefault()
     {
@@ -73,5 +77,11 @@ class ProjectsPresenter extends BasePresenter
         }
 
         $this->flashMessage('Při ukládání došlo k chybě:'.$errors, 'danger');
+    }
+
+    protected function createComponentProjectDataGrid()
+    {
+        $control = $this->projectDataGrid->create();
+        return $control;
     }
 }
