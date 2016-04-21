@@ -1,0 +1,13 @@
+{extends $original_template}
+
+{block detail}
+    <h2>{$item->name}</h2>
+    <p>
+        <strong>Kategorie: </strong>{$item->category->name}<br>
+        <strong>Projekt: </strong>{$item->project->name}<br>
+        <strong>Popis: </strong>{$item->description}<br>
+        <strong>Dopad: </strong>{$item->impacts}<br>
+        <strong>Pravděpodobnost: </strong>{$item->probability}<br>
+        <strong>Stav: </strong>{$item->state}<br>
+    </p>
+{/block}

@@ -7,6 +7,7 @@ use App\Model;
 use App\Forms\RiskForm;
 use App\Model\Repository\CategoryRepository;;
 use App\Model\Repository\RiskRepository;;
+use App\DataGrids\RiskDataGrid;
 
 class RisksPresenter extends BasePresenter
 {
@@ -16,6 +17,8 @@ class RisksPresenter extends BasePresenter
     public $riskRepository;
     /** @var RiskForm @inject */
     public $riskFormFactory;
+	/** @var RiskDataGrid @inject */
+	public $riskDataGrid;
 
     public function renderCategories()
     {
@@ -41,6 +44,23 @@ class RisksPresenter extends BasePresenter
         $this->flashMessage('Riziko ' . $risk->getName() . ' smazáno');
         $this->redirect('default');
     }
+
+	public function actionActivate($id)
+	{
+		$risk = $this->riskRepository->getById($id);
+		$risk->setState('aktivni');
+		$this->riskRepository->update($risk);
+		$this->redirect('default');
+	}
+
+	public function actionDeactivate($id)
+	{
+		$risk = $this->riskRepository->getById($id);
+		$risk->setState('neaktivni');
+		$this->riskRepository->update($risk);
+		$this->redirect('default');
+	}
+
     public function formSuccess($form)
     {
         $values = $form->getValues();
@@ -69,4 +89,10 @@ class RisksPresenter extends BasePresenter
         $control->onError[] = array($this, 'formError');
         return $control;
     }
+
+	protected function createComponentRiskDataGrid()
+	{
+		$control = $this->riskDataGrid->create();
+		return $control;
+	}
 }

@@ -21,11 +21,13 @@ extensions:
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
 
+
 services:
     - Nette\Mail\SmtpMailer(%mail%)
 
     - App\DataGrids\EmployeeDataGrid
     - App\DataGrids\ProjectDataGrid
+    - App\DataGrids\RiskDataGrid
 
     - App\Forms\ForgottenPasswordFormFactory
     - App\Forms\SignFormFactory
