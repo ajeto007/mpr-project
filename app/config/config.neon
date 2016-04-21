@@ -28,6 +28,7 @@ services:
     - App\DataGrids\EmployeeDataGrid
     - App\DataGrids\ProjectDataGrid
     - App\DataGrids\RiskDataGrid
+    - App\DataGrids\CategoryDataGrid
 
     - App\Forms\ForgottenPasswordFormFactory
     - App\Forms\SignFormFactory

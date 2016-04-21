@@ -5,9 +5,10 @@ namespace App\Presenters;
 use Nette;
 use App\Model;
 use App\Forms\RiskForm;
-use App\Model\Repository\CategoryRepository;;
+use App\Model\Repository\CategoryRepository;
 use App\Model\Repository\RiskRepository;;
 use App\DataGrids\RiskDataGrid;
+use App\DataGrids\CategoryDataGrid;
 
 class RisksPresenter extends BasePresenter
 {
@@ -19,6 +20,8 @@ class RisksPresenter extends BasePresenter
     public $riskFormFactory;
 	/** @var RiskDataGrid @inject */
 	public $riskDataGrid;
+	/** @var CategoryDataGrid @inject */
+	public $categoryDataGrid;
 
     public function renderCategories()
     {
@@ -93,6 +96,12 @@ class RisksPresenter extends BasePresenter
 	protected function createComponentRiskDataGrid()
 	{
 		$control = $this->riskDataGrid->create();
+		return $control;
+	}
+
+	protected function createComponentCategoryDataGrid()
+	{
+		$control = $this->categoryDataGrid->create();
 		return $control;
 	}
 }
