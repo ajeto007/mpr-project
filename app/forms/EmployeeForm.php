@@ -49,7 +49,7 @@ class EmployeeForm extends Nette\Object
             ->setAttribute('class', 'form-control')
             ->addRule(Form::FILLED);
 
-        $form->addSelect('position', 'Pozice', Employee::$positions)
+        $form->addText('position', 'Pozice')
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
 
