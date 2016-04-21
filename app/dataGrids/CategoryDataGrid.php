@@ -25,8 +25,8 @@ class CategoryDataGrid extends Object
         $grid->addColumnText('name', 'Jméno')
             ->setSortable();
 
-		$grid->addColumnText('parent_name', 'Nadřazená kategorie', 'parent.name')
-			->setSortable();
+        $grid->addColumnText('parent_name', 'Nadřazená kategorie', 'parent.name')
+            ->setSortable();
 
         $grid->setTemplateFile(__DIR__ . '/CategoryDataGrid.latte');
 

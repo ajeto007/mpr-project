@@ -25,11 +25,11 @@ class RiskDataGrid extends Object
         $grid->addColumnText('name', 'Jméno')
             ->setSortable();
 
-		$grid->addColumnText('category_name', 'Kategorie', 'category.name')
-			->setSortable();
+        $grid->addColumnText('category_name', 'Kategorie', 'category.name')
+            ->setSortable();
 
-		$grid->addColumnText('project_name', 'Projekt', 'project.name')
-			->setSortable();
+        $grid->addColumnText('project_name', 'Projekt', 'project.name')
+            ->setSortable();
 
         $grid->addColumnText('description', 'Popis')
             ->setSortable();
@@ -52,21 +52,21 @@ class RiskDataGrid extends Object
             ->setClass('btn btn-xs btn-danger')
             ->setConfirm('Chcete opravdu odstranit riziko %s?', 'name');
 
-		$grid->addAction('activate', 'Aktivovat', 'Risks:activate')
-			->setIcon('pencil')
-			->setClass('btn btn-xs btn-success');
+        $grid->addAction('activate', 'Aktivovat', 'Risks:activate')
+            ->setIcon('pencil')
+            ->setClass('btn btn-xs btn-success');
 
-		$grid->allowRowsAction('activate', function($item) {
-			return $item->state == 'neaktivni';
-		});
+        $grid->allowRowsAction('activate', function($item) {
+            return $item->state == 'neaktivni';
+        });
 
-		$grid->addAction('deactivate', 'Deaktivovat', 'Risks:deactivate')
-			->setIcon('pencil')
-			->setClass('btn btn-xs btn-danger');
+        $grid->addAction('deactivate', 'Deaktivovat', 'Risks:deactivate')
+            ->setIcon('pencil')
+            ->setClass('btn btn-xs btn-danger');
 
-		$grid->allowRowsAction('deactivate', function($item) {
-			return $item->state == 'aktivni';
-		});
+        $grid->allowRowsAction('deactivate', function($item) {
+            return $item->state == 'aktivni';
+        });
 
         $grid->setItemsDetail();
         $grid->setTemplateFile(__DIR__ . '/RiskDataGrid.latte');

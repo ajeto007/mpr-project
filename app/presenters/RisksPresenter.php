@@ -18,10 +18,10 @@ class RisksPresenter extends BasePresenter
     public $riskRepository;
     /** @var RiskForm @inject */
     public $riskFormFactory;
-	/** @var RiskDataGrid @inject */
-	public $riskDataGrid;
-	/** @var CategoryDataGrid @inject */
-	public $categoryDataGrid;
+    /** @var RiskDataGrid @inject */
+    public $riskDataGrid;
+    /** @var CategoryDataGrid @inject */
+    public $categoryDataGrid;
 
     public function renderCategories()
     {
@@ -48,21 +48,21 @@ class RisksPresenter extends BasePresenter
         $this->redirect('default');
     }
 
-	public function actionActivate($id)
-	{
-		$risk = $this->riskRepository->getById($id);
-		$risk->setState('aktivni');
-		$this->riskRepository->update($risk);
-		$this->redirect('default');
-	}
+    public function actionActivate($id)
+    {
+        $risk = $this->riskRepository->getById($id);
+        $risk->setState('aktivni');
+        $this->riskRepository->update($risk);
+        $this->redirect('default');
+    }
 
-	public function actionDeactivate($id)
-	{
-		$risk = $this->riskRepository->getById($id);
-		$risk->setState('neaktivni');
-		$this->riskRepository->update($risk);
-		$this->redirect('default');
-	}
+    public function actionDeactivate($id)
+    {
+        $risk = $this->riskRepository->getById($id);
+        $risk->setState('neaktivni');
+        $this->riskRepository->update($risk);
+        $this->redirect('default');
+    }
 
     public function formSuccess($form)
     {
@@ -93,15 +93,15 @@ class RisksPresenter extends BasePresenter
         return $control;
     }
 
-	protected function createComponentRiskDataGrid()
-	{
-		$control = $this->riskDataGrid->create();
-		return $control;
-	}
+    protected function createComponentRiskDataGrid()
+    {
+        $control = $this->riskDataGrid->create();
+        return $control;
+    }
 
-	protected function createComponentCategoryDataGrid()
-	{
-		$control = $this->categoryDataGrid->create();
-		return $control;
-	}
+    protected function createComponentCategoryDataGrid()
+    {
+        $control = $this->categoryDataGrid->create();
+        return $control;
+    }
 }
