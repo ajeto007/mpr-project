@@ -30,7 +30,7 @@ class EmployeesPresenter extends BasePresenter
         $employee = $this->employeeRepository->getById($this->user->id);
         $address = $employee->getAddress();
         $data = $employee->getAsArray();
-        $data['birthday'] = $data['birthday']->format('Y-m-d');
+        $data['birthday'] = $data['birthday']->format('m/d/Y');
         $data = array_merge($data, $address->getAsArray());
         $this['employeeForm']->setDefaults($data);
     }
@@ -45,7 +45,7 @@ class EmployeesPresenter extends BasePresenter
         $employee = $this->employeeRepository->getById($id);
         $address = $employee->getAddress();
         $data = $employee->getAsArray();
-        $data['birthday'] = $data['birthday']->format('Y-m-d');
+        $data['birthday'] = $data['birthday']->format('m/d/Y');
         $data = array_merge($data, $address->getAsArray());
         $this['employeeForm']->setDefaults($data);
     }
