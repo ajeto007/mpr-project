@@ -91,7 +91,8 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                    <a n:href="Employees:profile" class="btn btn-default btn-flat">Profil</a>
+                                    <a n:href="Employees:changePassword" class="btn btn-default btn-flat">Změna hesla</a>
                                 </div>
                                 <div class="pull-right">
                                     <a n:href="Sign:out" class="btn btn-default btn-flat">Odhlásit</a>
@@ -147,12 +148,19 @@
                     <ul class="treeview-menu">
                         <li><a n:href="Employees:add"><i class="fa fa-angle-double-right"></i>Přidat zaměstnance</a></li>
                         <li><a n:href="Employees:"><i class="fa fa-angle-double-right"></i>Zaměstnanci</a></li>
-                        <li><a n:href="Risks:company"><i class="fa fa-angle-double-right"></i>Souhrn rizik pro Firmu</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>Klienti</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
                         <li><a n:href="Clients:add"><i class="fa fa-angle-double-right"></i>Přidat klienta</a></li>
                         <li><a n:href="Clients:"><i class="fa fa-angle-double-right"></i>Klienti</a></li>
                     </ul>
                 </li>
-                
             </ul>
         </section>
         <!-- /.sidebar -->

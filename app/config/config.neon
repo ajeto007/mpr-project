@@ -36,6 +36,7 @@ services:
     - App\Forms\RiskForm
     - App\Forms\ClientFormFactory
     - App\Forms\ProjectFormFactory
+    - App\AdminModule\Forms\ChangePasswordFormFactory
 
     - App\Model\Repository\EmployeeRepository
     - App\Model\Repository\CategoryRepository
