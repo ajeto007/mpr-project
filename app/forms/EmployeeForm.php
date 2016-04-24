@@ -15,10 +15,19 @@ class EmployeeForm extends Nette\Object
 {
     /** @var EmployeeRepository */
     public $employeeRepository;
+    /** @var Nette\Mail\SmtpMailer */
+    public $mailer;
+    /** @var Nette\Application\LinkGenerator */
+    public $linkGenerator;
 
-    public function __construct(EmployeeRepository $employeeRepository)
-    {
+    public function __construct(
+        EmployeeRepository $employeeRepository,
+        Nette\Mail\SmtpMailer $mailer,
+        Nette\Application\LinkGenerator $linkGenerator
+    ) {
         $this->employeeRepository = $employeeRepository;
+        $this->mailer = $mailer;
+        $this->linkGenerator = $linkGenerator;
     }
 
     public function create()
@@ -79,7 +88,16 @@ class EmployeeForm extends Nette\Object
         } else {
             $address = new Address();
             $employee = new Employee();
-            $employee->setPassword(Passwords::hash(Random::generate()));
+            $password = Nette\Utils\Random::generate();
+            $mail = new Nette\Mail\Message();
+            $mail->setFrom('NoReply MPR <noreply@mpr.cz>')
+                ->addTo($values->email)
+                ->setSubject('Registrace do administrace')
+                ->setBody("Dobrý den,\nPřihlašovací údaje do administrace na stránce " .
+                    $this->linkGenerator->link('Homepage:') . " jsou:\n" .
+                    "Přihlašovací e-mail: " . $values->email . "\n" .
+                    "Vygenerované heslo: " . $password);
+            $employee->setPassword(Nette\Security\Passwords::hash($password));
         }
     
         $address->setStreet($values->street);
@@ -101,6 +119,7 @@ class EmployeeForm extends Nette\Object
             } else {
                 $this->employeeRepository->insert($employee);
                 $this->employeeRepository->insert($address);
+                $this->mailer->send($mail);
             }
         } catch (\Exception $e) {
             Debugger::log($e);
