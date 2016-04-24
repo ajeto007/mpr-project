@@ -1,0 +1,13 @@
+{extends $original_template}
+
+{block detail}
+    <h2>{$item->companyName}</h2>
+    <p>
+        <strong>Kontaktní osoba: </strong>{$item->contactName}<br>
+        <strong>E-mail: </strong>{$item->email}<br>
+        <strong>Telefon: </strong>{$item->phone}<br>
+        <strong>Adresa: </strong>{$item->address->street}, {$item->address->postcode} {$item->address->city}<br>
+        <strong>IČO: </strong>{$item->ico}<br>
+        <strong>DIČ: </strong>{$item->dic}<br>
+    </p>
+{/block}

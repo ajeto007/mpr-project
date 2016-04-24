@@ -1,6 +1,7 @@
 <?php
 namespace App\Presenters;
 
+use App\DataGrids\ClientDataGrid;
 use Nette;
 use App\Model;
 use App\Forms\ClientFormFactory;
@@ -10,9 +11,10 @@ class ClientsPresenter extends BasePresenter
 {
     /** @var ClientFormFactory @inject */
     public $clientFormFactory;
-
     /** @var ClientRepository @inject */
     public $clientRepository;
+    /** @var ClientDataGrid @inject */
+    public $clientDataGrid;
 
     public function renderDefault()
     {
@@ -73,6 +75,12 @@ class ClientsPresenter extends BasePresenter
         $control = $this->clientFormFactory->create();
         $control->onSuccess[] = array($this, 'formSuccess');
         $control->onError[] = array($this, 'formError');
+        return $control;
+    }
+
+    protected function createComponentClientDataGrid()
+    {
+        $control = $this->clientDataGrid->create();
         return $control;
     }
 }
