@@ -61,7 +61,7 @@ class EmployeeForm extends Nette\Object
 
         $form->addText('postcode', 'PSČ')
             ->setAttribute('class', 'form-control')
-            ->addRule(Form::FILLED);
+            ->addRule(Form::PATTERN, 'Zadej PSČ ve formátu NNNNN', '[0-9]{5}');
 
         $form->addText('position', 'Pozice')
             ->addRule(Form::FILLED)
