@@ -15,10 +15,19 @@ class EmployeeForm extends Nette\Object
 {
     /** @var EmployeeRepository */
     public $employeeRepository;
+    /** @var Nette\Mail\SmtpMailer */
+    public $mailer;
+    /** @var Nette\Application\LinkGenerator */
+    public $linkGenerator;
 
-    public function __construct(EmployeeRepository $employeeRepository)
-    {
+    public function __construct(
+        EmployeeRepository $employeeRepository,
+        Nette\Mail\SmtpMailer $mailer,
+        Nette\Application\LinkGenerator $linkGenerator
+    ) {
         $this->employeeRepository = $employeeRepository;
+        $this->mailer = $mailer;
+        $this->linkGenerator = $linkGenerator;
     }
 
     public function create()
@@ -26,25 +35,30 @@ class EmployeeForm extends Nette\Object
         $form = new Form;
 
         $form->addText('email', 'Email')
-            ->addRule(Form::PATTERN, 'Zadej validní email', '[a-zA-Z0-9\.\-_]+@[0-9a-zA-Z\.\-]+\.[a-z]+')
+            ->addRule(Form::EMAIL, 'Zadej validní email')
             ->setAttribute('class', 'form-control');
+
         $form->addText('name', 'Jméno')
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
+
         $form->addText('phone', 'Telefon')
-            ->addRule(Form::PATTERN, 'Zadej validni telefon', '[0-9]{9}')
+            ->addRule(Form::PATTERN, 'Zadej validni telefon', '[0-9]{3} [0-9]{3} [0-9]{3}')
             ->setAttribute('class', 'form-control')
-            ->setOption('description', '123456789');
+            ->setOption('description', '789 456 123');
+
         $form->addText('birthday', 'Datum narození')
-            ->addRule(Form::PATTERN, 'Zadej validní datum', '[0-9]{4}-[0-9]{2}-[0-9]{2}')
             ->setAttribute('class', 'form-control')
-            ->setOption('description', 'yyyy-mm-dd');
+            ->setOption('description', 'mm/dd/rrrr');
+
         $form->addText('street', 'Ulice, Č.P')
             ->setAttribute('class', 'form-control')
             ->addRule(Form::FILLED);
+
         $form->addText('city', 'Město')
             ->setAttribute('class', 'form-control')
             ->addRule(Form::FILLED);
+
         $form->addText('postcode', 'PSČ')
             ->setAttribute('class', 'form-control')
             ->addRule(Form::PATTERN, 'Zadej PSČ ve formátu NNNNN', '[0-9]{5}');
@@ -56,7 +70,7 @@ class EmployeeForm extends Nette\Object
         $form->addSelect('role', 'Role', Employee::$roles)
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
-        //
+
         $form->addSubmit('submit', 'Odeslat')
             ->setAttribute('class', 'btn btn-default');
 
@@ -74,7 +88,16 @@ class EmployeeForm extends Nette\Object
         } else {
             $address = new Address();
             $employee = new Employee();
-            $employee->setPassword(Passwords::hash(Random::generate()));
+            $password = Nette\Utils\Random::generate();
+            $mail = new Nette\Mail\Message();
+            $mail->setFrom('NoReply MPR <noreply@mpr.cz>')
+                ->addTo($values->email)
+                ->setSubject('Registrace do administrace')
+                ->setBody("Dobrý den,\nPřihlašovací údaje do administrace na stránce " .
+                    $this->linkGenerator->link('Homepage:') . " jsou:\n" .
+                    "Přihlašovací e-mail: " . $values->email . "\n" .
+                    "Vygenerované heslo: " . $password);
+            $employee->setPassword(Nette\Security\Passwords::hash($password));
         }
     
         $address->setStreet($values->street);
@@ -96,6 +119,7 @@ class EmployeeForm extends Nette\Object
             } else {
                 $this->employeeRepository->insert($employee);
                 $this->employeeRepository->insert($address);
+                $this->mailer->send($mail);
             }
         } catch (\Exception $e) {
             Debugger::log($e);

@@ -51,6 +51,7 @@ class Employee extends AbstractEntity
      * @ORM\Column(type="string")
     */
     protected $position;
+
     /**
      * @ORM\Column(type="enum", columnDefinition="enum('vedouci', 'zamestnanec', 'admin', 'bezprihlasovani') NOT NULL")
     */
