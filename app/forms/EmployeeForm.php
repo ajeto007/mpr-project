@@ -121,6 +121,8 @@ class EmployeeForm extends Nette\Object
                 $this->employeeRepository->insert($address);
                 $this->mailer->send($mail);
             }
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            $form->addError($e);
         } catch (\Exception $e) {
             Debugger::log($e);
             $form->addError($e->getMessage());

@@ -80,7 +80,11 @@ class EmployeesPresenter extends BasePresenter
 
     public function formError($form)
     {
-        $this->flashMessage('Něco se nepovedlo', 'danger');
+        if ($form->getErrors()[0] instanceof \Doctrine\DBAL\Exception\UniqueConstraintViolationException) {
+            $this->flashMessage('Tento e-mail je již používaný, zvolte jiný', 'warning');
+        } else {
+            $this->flashMessage('Něco se nepovedlo', 'danger');
+        }
     }
 
     protected function createComponentEmployeeForm()
