@@ -82,7 +82,7 @@ class EmployeeForm extends Nette\Object
 
     public function processForm(Form $form, $values)
     {
-        if($values->id) {
+        if ($values->id) {
             $employee = $this->employeeRepository->getById($values->id);
             $address = $employee->getAddress();
         } else {

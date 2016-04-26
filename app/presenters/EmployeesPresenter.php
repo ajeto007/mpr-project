@@ -28,10 +28,11 @@ class EmployeesPresenter extends BasePresenter
     public function actionProfile()
     {
         $employee = $this->employeeRepository->getById($this->user->id);
-        $address = $employee->getAddress();
+        $addressData = $employee->getAddress()->getAsArray();
+        unset($addressData['id']);
         $data = $employee->getAsArray();
         $data['birthday'] = $data['birthday']->format('m/d/Y');
-        $data = array_merge($data, $address->getAsArray());
+        $data = array_merge($data, $addressData);
         $this['employeeForm']->setDefaults($data);
     }
 
@@ -43,10 +44,11 @@ class EmployeesPresenter extends BasePresenter
     public function actionEdit($id)
     {
         $employee = $this->employeeRepository->getById($id);
-        $address = $employee->getAddress();
+        $addressData = $employee->getAddress()->getAsArray();
+        unset($addressData['id']);
         $data = $employee->getAsArray();
         $data['birthday'] = $data['birthday']->format('m/d/Y');
-        $data = array_merge($data, $address->getAsArray());
+        $data = array_merge($data, $addressData);
         $this['employeeForm']->setDefaults($data);
     }
 
