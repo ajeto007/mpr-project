@@ -55,8 +55,14 @@ class EmployeesPresenter extends BasePresenter
     public function actionDelete($id)
     {
         $employee = $this->employeeRepository->getById($id);
-        $this->employeeRepository->delete($employee);
-        $this->flashMessage('Uživatel ' . $employee->getName() . ' smazán');
+        try {
+            $this->employeeRepository->delete($employee);
+            $this->flashMessage('Uživatel ' . $employee->getName() . ' smazán', 'success');
+        } catch (\Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException $e) {
+            $this->flashMessage('Nelze smazat uživatele ' . $employee->getName() . ', protože je vedoucím projektu', 'warning');
+        } catch (\Exception $e) {
+            $this->flashMessage('Uživatele ' . $employee->getName() . ' se nepovedlo smazat smazán', 'danger');
+        }
         $this->redirect('default');
     }
 

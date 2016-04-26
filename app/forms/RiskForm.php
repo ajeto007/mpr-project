@@ -49,7 +49,7 @@ class RiskForm extends Nette\Object
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
 
-        $form->addSelect('project', 'Project', $projects)
+        $form->addSelect('project', 'Projekt', $projects)
             ->addRule(Form::FILLED)
             ->setAttribute('class', 'form-control');
 
