@@ -76,6 +76,14 @@ class ProjectFormFactory extends Nette\Object
 
     public function formSucceeded(Form $form, $values)
     {
+        $dateFrom = new \DateTime($values->fromDate);
+        $dateTo = new \DateTime($values->toDate);
+        if ($dateFrom>$dateTo)
+        {
+            $form->addError("Projekt končí dříve než začíná");
+            return;
+        }
+
         $allEmployees = array();
         foreach ($this->employeeRepository->getAll() as $e) {
             $allEmployees[$e->getId()] = $e;
@@ -95,8 +103,8 @@ class ProjectFormFactory extends Nette\Object
         $project->setClient($this->clientRepository->getById($values->client));
         $project->setLeader($allEmployees[$values->leader]);
         $project->setDescription($values->description);
-        $project->setFromDate(new \DateTime($values->fromDate));
-        $project->setToDate(new \DateTime($values->toDate));
+        $project->setFromDate($dateFrom);
+        $project->setToDate($dateTo);
         $employees = $project->getEmployees();
         foreach ($values->employees as $e) {
             $employees->add($allEmployees[$e]);
