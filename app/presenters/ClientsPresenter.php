@@ -33,14 +33,15 @@ class ClientsPresenter extends BasePresenter
 
     public function actionDelete($id)
     {
-        try
-        {
+        try {
             $this->clientRepository->deleteWhere(array("id" => $id));
             $this->flashMessage('Klient smazán');
         }
-        catch (\Exception $e)
-        {
-            $this->flashMessage('Klienta se nepodařilo smazat: ' . $e->getMessage(), 'danger');
+        catch (\Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException $e) {
+            $this->flashMessage('Nelze smazat klienta, protože je přiřazen k nějakému projektu', 'warning');
+        }
+        catch (\Exception $e) {
+            $this->flashMessage('Klienta se nepodařilo smazat', 'danger');
         }
         $this->redirect('default');
     }
