@@ -19,14 +19,21 @@ class CategoryDataGrid extends Object
     public function create()
     {
         $grid = new DataGrid();
+        
+        $source = $this->categoryRepository->getQB()
+            ->leftJoin('table.parent', 'pa');
 
-        $grid->setDataSource($this->categoryRepository->getQB());
+        $grid->setDataSource($source);
 
         $grid->addColumnText('name', 'Jméno')
             ->setSortable();
 
+        $grid->addFilterText('name', 'Jméno');
+
         $grid->addColumnText('parent_name', 'Nadřazená kategorie', 'parent.name')
-            ->setSortable();
+            ->setSortable('pa.name');
+
+        $grid->addFilterText('parent_name', 'Nadřazená kategorie', 'pa.name');
 
         $grid->setTemplateFile(__DIR__ . '/CategoryDataGrid.latte');
 

@@ -25,17 +25,17 @@ class Category extends AbstractEntity
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="descendants")
      */
-    protected $parent; 
+    protected $parent;
     
     /**
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent", cascade={"remove"})
      */
-    protected $descendants;   
+    protected $descendants;
     
     /**
      * @ORM\OneToMany(targetEntity="Risk", mappedBy="category", cascade={"remove"})
      */
-    protected $risks;  
+    protected $risks;
 
     public function __construct() 
     {
