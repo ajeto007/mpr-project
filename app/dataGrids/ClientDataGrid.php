@@ -20,19 +20,29 @@ class ClientDataGrid extends Object
     {
         $grid = new DataGrid();
 
+        $grid->setRememberState(FALSE);
+
         $grid->setDataSource($this->clientRepository->getQB());
 
         $grid->addColumnText('companyName', 'Název')
             ->setSortable();
 
+        $grid->addFilterText('companyName', 'Název');
+
         $grid->addColumnText('contactName', 'Kontaktní osoba')
             ->setSortable();
+
+        $grid->addFilterText('contactName', 'Kontaktní osoba');
 
         $grid->addColumnText('email', 'E-mail')
             ->setSortable();
 
+        $grid->addFilterText('email', 'E-mail');
+
         $grid->addColumnText('phone', 'Telefon')
             ->setSortable();
+
+        $grid->addFilterText('phone', 'Telefon');
 
         $grid->addAction('edit', 'Upravit', 'Clients:edit')
             ->setIcon('pencil')

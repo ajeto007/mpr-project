@@ -2,6 +2,7 @@
 
 namespace App\DataGrids;
 
+use App\Model\Entity\Risk;
 use App\Model\Repository\RiskRepository;
 use Nette\Object;
 use Ublaboo\DataGrid\DataGrid;
@@ -20,28 +21,46 @@ class RiskDataGrid extends Object
     {
         $grid = new DataGrid();
 
-        $grid->setDataSource($this->riskRepository->getQB());
+        $grid->setRememberState(FALSE);
+
+        $source = $this->riskRepository->getQB()
+            ->join('table.category', 'ca')
+            ->join('table.project', 'pr');
+
+        $grid->setDataSource($source);
 
         $grid->addColumnText('name', 'Jméno')
             ->setSortable();
 
+        $grid->addFilterText('name', 'Jméno');
+
         $grid->addColumnText('category_name', 'Kategorie', 'category.name')
-            ->setSortable();
+            ->setSortable('ca.name');
+
+        $grid->addFilterText('category_name', 'Kategorie', 'ca.name');
 
         $grid->addColumnText('project_name', 'Projekt', 'project.name')
-            ->setSortable();
+            ->setSortable('pr.name');
 
-        $grid->addColumnText('description', 'Popis')
-            ->setSortable();
+        $grid->addFilterText('project_name', 'Projekt', 'pr.name');
 
         $grid->addColumnText('impacts', 'Dopad')
+            ->setReplacement(Risk::$impactsEnum)
             ->setSortable();
+
+        $grid->addFilterSelect('impacts', 'Dopad', array_merge(array('' => '-'), Risk::$impactsEnum));
 
         $grid->addColumnText('probability', 'Pravděpodobnost')
+            ->setReplacement(Risk::$probabilityEnum)
             ->setSortable();
 
+        $grid->addFilterSelect('probability', 'Pravděbodobnost', array_merge(array('' => '-'), Risk::$probabilityEnum));
+
         $grid->addColumnText('state', 'Stav')
+            ->setReplacement(Risk::$stateEnum)
             ->setSortable();
+
+        $grid->addFilterSelect('state', 'Stav', array_merge(array('' => '-'), Risk::$stateEnum));
 
         $grid->addAction('edit', 'Upravit', 'Risks:edit')
             ->setIcon('pencil')

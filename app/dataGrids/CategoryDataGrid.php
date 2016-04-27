@@ -19,7 +19,9 @@ class CategoryDataGrid extends Object
     public function create()
     {
         $grid = new DataGrid();
-        
+
+        $grid->setRememberState(FALSE);
+
         $source = $this->categoryRepository->getQB()
             ->leftJoin('table.parent', 'pa');
 

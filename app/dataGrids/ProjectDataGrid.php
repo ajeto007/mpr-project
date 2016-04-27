@@ -20,24 +20,32 @@ class ProjectDataGrid extends Object
     {
         $grid = new DataGrid();
 
-        $grid->setDataSource($this->projectRepository->getQB());
+        $grid->setRememberState(FALSE);
+
+        $source = $this->projectRepository->getQB()
+            ->join('table.leader', 'em');
+
+        $grid->setDataSource($source);
 
         $grid->addColumnText('name', 'Jméno')
             ->setSortable();
 
-        $grid->addColumnText('leader', 'Vedoucí')
-            ->setRenderer(function($item) {
-                $leader = $item->getLeader();
-                if ($leader==null) return "neurčen";
-                return $item->getLeader()->getName();
-            })
-            ->setSortable();
+        $grid->addFilterText('name', 'Jméno');
+
+        $grid->addColumnText('leader', 'Vedoucí', 'leader.name')
+            ->setSortable('em.name');
+
+        $grid->addFilterText('leader', 'Vedoucí', 'em.name');
 
         $grid->addColumnDateTime('fromDate', 'Datum začátku')
             ->setSortable();
 
+        $grid->addFilterDateRange('fromDate', 'Datum začátku');
+
         $grid->addColumnDateTime('toDate', 'Datum konce')
             ->setSortable();
+
+        $grid->addFilterDateRange('toDate', 'Datum konce');
 
         $grid->addAction('edit', 'Upravit', 'Projects:edit')
             ->setIcon('pencil')

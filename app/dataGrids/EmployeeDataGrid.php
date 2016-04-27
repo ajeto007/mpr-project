@@ -20,19 +20,29 @@ class EmployeeDataGrid extends Object
     {
         $grid = new DataGrid();
 
+        $grid->setRememberState(FALSE);
+
         $grid->setDataSource($this->employeeRepository->getQB());
 
         $grid->addColumnText('name', 'Jméno')
             ->setSortable();
 
+        $grid->addFilterText('name', 'Jméno');
+
         $grid->addColumnText('position', 'Pozice')
             ->setSortable();
+
+        $grid->addFilterText('position', 'Pozice');
 
         $grid->addColumnText('email', 'E-mail')
             ->setSortable();
 
+        $grid->addFilterText('email', 'E-mail');
+
         $grid->addColumnText('phone', 'Telefon')
             ->setSortable();
+
+        $grid->addFilterText('phone', 'Telefon');
 
         $grid->addAction('edit', 'Upravit', 'Employees:edit')
             ->setIcon('pencil')
