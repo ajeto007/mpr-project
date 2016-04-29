@@ -11,21 +11,22 @@
                                 {$input->options['description']}
                             {/if}
                             {if $input->name == 'birthday'}
-                                <div class='input-group date' id='datetimepicker3'>
+                                <span class='input-group date' id='datetimepicker3'>
                                     <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
-                                    {input $input, class => 'form-control pull-right'}
+                                    {input $input, class => 'form-control pull-right show-error-apart'}
                                     
-                                </div>
-                                <div id="error-container_todate"></div>
+                                </span>
+                                <div id="error-container_birthday"></div>
                             {elseif $input->name == 'phone'}
-                                <div class="input-group">
-                                    <div class="input-group-addon">
+                                <span class="input-group">
+                                    <span class="input-group-addon">
                                         <i class="fa fa-phone"></i>
-                                    </div>
-                                    {input $input, class => 'form-control', id => 'data-mask', data-inputmask => '"mask": "999 999 999"'}
-                                </div>
+                                    </span>
+                                    {input $input, class => 'form-control show-error-apart', id => 'data-mask', data-inputmask => '"mask": "999 999 999"'}
+                                </span>
+                                <div id="error-container_data-mask"></div>
                             {else}
                                 {input $input}
                             {/if}
