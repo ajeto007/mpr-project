@@ -52,6 +52,7 @@ class RisksPresenter extends BasePresenter
     {
         $risk = $this->riskRepository->getById($id);
         $risk->setState('aktivni');
+        $risk->setActivated(new \DateTime());
         $this->riskRepository->update($risk);
         $this->redirect('default');
     }

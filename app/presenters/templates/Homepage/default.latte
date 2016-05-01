@@ -24,16 +24,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {foreach $newRisks as $r}
                             <tr>
-                                <td>111</td>
-                                <td>30/03/2016</td>
-                                <td>Tady bude popis rizika.</td>
+                                <td>{$r[0]->id}</td>
+                                <td>{$r[0]->created|date:'%d/%m/%Y %H:%I:%S'}</td>
+                                <td>{$r[0]->name}</td>
                             </tr>
-                            <tr>
-                                <td>112</td>
-                                <td>31/03/2016</td>
-                                <td>Tady bude popis rizika.</td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>
@@ -47,12 +44,12 @@
                 <div class="box-body table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <tbody>
+                            {foreach $myProjects as $p}
                             <tr>
-                                <td>1. projekt</td>
+                                <td><a href="{link Projects:edit id=>$p->id}">{$p->name}</a></td>
+                                <td>{if $p->leader->id==$user->identity->id}vedoucí{/if}</td>
                             </tr>
-                            <tr>
-                                <td>2. projekt</td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>
@@ -75,16 +72,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {foreach $activatedRisks as $r}
                             <tr>
-                                <td>111</td>
-                                <td>01/04/2016</td>
-                                <td>Tady bude popis rizika.</td>
+                                <td>{$r[0]->id}</td>
+                                <td>{$r[0]->activated|date:'%d/%m/%Y %H:%I:%S'}</td>
+                                <td>{$r[0]->name}</td>
                             </tr>
-                            <tr>
-                                <td>112</td>
-                                <td>01/05/2016</td>
-                                <td>Tady bude popis rizika.</td>
-                            </tr>
+                            {/foreach}
                         </tbody>
                     </table>
                 </div>

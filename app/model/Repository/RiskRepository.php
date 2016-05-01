@@ -27,6 +27,24 @@ class RiskRepository extends AbstractRepository
     }
 
     /**
+     * @param $n
+     * @return Risk[]
+     */
+    public function getNewestRisk($n)
+    {
+        return $this->getQB()->orderBy("table.created", "DESC")->setMaxResults($n);
+    }
+
+    /**
+     * @param $n
+     * @return Risk[]
+     */
+    public function getActivatedRisk($n)
+    {
+        return $this->getQB()->where("table.state='aktivni'")->orderBy("table.activated", "DESC")->setMaxResults($n);
+    }
+
+    /**
      * @param $id
      * @return Risk|null
      */

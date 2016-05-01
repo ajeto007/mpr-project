@@ -3,8 +3,8 @@
 namespace App\Model\Repository;
 
 use App\Model\Entity\Project;
+use App\Model\Entity\Employee;
 use Kdyby\Doctrine\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 class ProjectRepository extends AbstractRepository
 {
@@ -51,5 +51,14 @@ class ProjectRepository extends AbstractRepository
     public function getOneByParameters($parameters)
     {
         return parent::getOneByParameters($parameters);
+    }
+
+    /**
+     * @param Employee $user
+     * @return Project[]
+     */
+    public function getByUser($user)
+    {
+        return $this->entityManager->createQuery('SELECT p,e FROM App\Model\Entity\Project p LEFT JOIN p.employees e WHERE e.id = '.$user->getId().' or p.leader = '.$user->getId())->getResult();
     }
 }
