@@ -57,7 +57,7 @@ class Risk extends AbstractEntity
      * @ORM\Column(type="enum", columnDefinition="enum('nepatrne', 'male', 'citelne', 'kriticke', 'katastroficke') NOT NULL")
      */
     protected $impacts;
-    public static $impactsEnum = array('nepatrne' => 'Nepatrné', 'male' => 'Malé', 'citelne' => 'Citelné', 'kriticke' => 'Kritické', 'katastroficke' => 'Katastrofické');
+    public static $impactsEnum = array('nepatrne' => 'Nepatrný', 'male' => 'Malý', 'citelne' => 'Citelný', 'kriticke' => 'Kritický', 'katastroficke' => 'Katastrofický');
 
     /**
      * @ORM\Column(type="enum", columnDefinition="enum('neaktivni', 'aktivni') NOT NULL")

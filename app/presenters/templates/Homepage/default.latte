@@ -90,5 +90,38 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Matice rizik</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Dopad/Pravděpodobnost</th>
+                                {foreach $probabilities as $key => $value}
+                                    <th>{$value}</th>
+                                {/foreach}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {var iCounter = 0}
+                            {foreach array_reverse($impacts) as $iKey => $iValue}
+                                <tr>
+                                    <td>{$iValue}</td>
+                                    {var pCounter = 5}
+                                    {foreach $probabilities as $pKey => $pValue}
+                                        <td style="color: #FFF;text-align:center;background-color: rgb({255  - ($iCounter + $pCounter) * 20}, 125, 125);">{sizeof($matrix[$iKey][$pKey])}</td>
+                                        {var $pCounter = $pCounter - 1}
+                                    {/foreach}
+                                </tr>
+                                {var $iCounter = $iCounter + 1}
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 {/block}
