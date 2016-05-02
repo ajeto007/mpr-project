@@ -31,25 +31,40 @@ class ProjectsPresenter extends BasePresenter
 
     public function actionDelete($id)
     {
-        try
-        {
-            $project = $this->projectRepository->getById($id);
+        $project = $this->projectRepository->getById($id);
+
+        if (is_null($project)) {
+            throw new Nette\Application\BadRequestException();
+        } elseif ($this->user->isInRole('vedouci') && $this->user->id != $project->getLeader()->getId()) {
+            throw new Nette\Application\ForbiddenRequestException();
+        }
+
+        try {
             $this->projectRepository->delete($project);
             $this->flashMessage('Projekt ' . $project->getName() . ' smazán');
         }
-        catch (\Exception $e)
-        {
-            $this->flashMessage('Projekt se nepodařilo smazat: ' . $e->getMessage(), 'danger');
+        catch (\Exception $e) {
+            $this->flashMessage('Projekt se nepodařilo smazat.', 'danger');
         }
         $this->redirect('default');
     }
 
     public function actionEdit($id)
     {
-        $risk = $this->projectRepository->getById($id);
-        $data = $risk->getAsArray();
+        $project = $this->projectRepository->getById($id);
+
+        if (is_null($project)) {
+            throw new Nette\Application\BadRequestException();
+        } elseif ($this->user->isInRole('vedouci') && $this->user->id != $project->getLeader()->getId()) {
+            throw new Nette\Application\ForbiddenRequestException();
+        }
+
+        $data = $project->getAsArray();
         $data['fromDate'] = $data['fromDate']->format('m/d/Y h:i A');
         $data['toDate'] = $data['toDate']->format('m/d/Y h:i A');
+        if ($this->user->isInRole('vedouci')) {
+            $this['projectForm']['leader']->setDisabled();
+        }
         $this['projectForm']->setDefaults($data);
     }
 

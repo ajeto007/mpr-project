@@ -48,3 +48,37 @@ services:
     - App\Model\UserManager
 
     router: App\RouterFactory::createRouter
+
+    authorizator:
+        class: Nette\Security\Permission
+        setup:
+            - addRole('admin')
+            - addRole('vedouci')
+            - addRole('zamestnanec')
+
+            - addResource('Clients')
+            - addResource('Employees')
+            - addResource('Homepage')
+            - addResource('Projects')
+            - addResource('Risks')
+            - addResource('Sign')
+
+            - allow('admin', Nette\Security\Permission::ALL, Nette\Security\Permission::ALL)
+            - allow('vedouci', Nette\Security\Permission::ALL, Nette\Security\Permission::ALL)
+            - allow('zamestnanec', Nette\Security\Permission::ALL, Nette\Security\Permission::ALL)
+
+            - deny('vedouci', 'Clients')
+            - deny('zamestnanec', 'Clients')
+
+            - deny('zamestnanec', 'Employees', 'add')
+            - deny('vedouci', 'Employees', 'add')
+            - deny('zamestnanec', 'Employees', 'default')
+            - deny('vedouci', 'Employees', 'edit')
+            - deny('zamestnanec', 'Employees', 'edit')
+
+            - deny('vedouci', 'Projects', 'create')
+            - deny('zamestnanec', 'Projects', 'create')
+            - deny('zamestnanec', 'Projects', 'edit')
+
+            - deny('zamestnanec', 'Risks', 'add')
+            - deny('zamestnanec', 'Risks', 'edit')

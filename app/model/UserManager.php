@@ -44,7 +44,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
         }
 
         $arr = $user->getAsArray();
-        return new Nette\Security\Identity($user->getId(), 'admin', $arr);
+        return new Nette\Security\Identity($user->getId(), $user->getRole(), $arr);
     }
 
 }

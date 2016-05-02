@@ -34,10 +34,11 @@ class ProjectFormFactory extends Nette\Object
     public function create()
     {
 
-        $heads = array_merge(
-            EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getByParameters(array('role' => 'vedouci'))),
-            EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getByParameters(array('role' => 'admin')))
-        );
+        $admins = EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getByParameters(array('role' => 'admin')));
+        $heads = EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getByParameters(array('role' => 'vedouci')));
+        foreach ($admins as $id => $admin) {
+            $heads[$id] = $admin;
+        }
         $employees =  EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getAll());
         $clients = ClientRepository::getIdIndexedArrayOfNames($this->clientRepository->getAll());
 

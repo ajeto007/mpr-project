@@ -92,6 +92,8 @@ class EmployeesPresenter extends BasePresenter
     {
         if ($form->getErrors()[0] instanceof \Doctrine\DBAL\Exception\UniqueConstraintViolationException) {
             $this->flashMessage('Tento e-mail je již používaný, zvolte jiný', 'warning');
+        } elseif ($form->getErrors()[0] == 'invalid role change') {
+            $this->flashMessage('Nemůžete změnit roli uživateli, který vede nějaké projekty.', 'warning');
         } else {
             $this->flashMessage('Něco se nepovedlo', 'danger');
         }

@@ -1,6 +1,6 @@
 {block title}
     Zaměstnanci
-    <a n:href="Employees:add" class="btn btn-default">Přidat zaměstnance</a>
+    <a n:if="$user->isAllowed('Employees', 'add')" n:href="Employees:add" class="btn btn-default">Přidat zaměstnance</a>
 {/block}
 
 {block breadcrumb}

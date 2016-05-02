@@ -1,6 +1,6 @@
 {block title}
     Klienti
-    <a n:href="Clients:add" class="btn btn-default">Vytvořit klienta</a>
+    <a n:if="$user->isAllowed('Clients', 'add')" n:href="Clients:add" class="btn btn-default">Vytvořit klienta</a>
 {/block}
 
 {block breadcrumb}

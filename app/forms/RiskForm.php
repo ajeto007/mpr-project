@@ -15,19 +15,24 @@ use Tracy\Debugger;
 class RiskForm extends Nette\Object
 {
     /** @var RiskRepository */
-    public $riskRepository;
-
+    private $riskRepository;
     /** @var ProjectRepository */
-    public $projectRepository;
-    
+    private $projectRepository;
     /** @var CategoryRepository */
-    public $categoryRepository;
+    private $categoryRepository;
+    /** @var Nette\Security\User */
+    private $user;
 
-    public function __construct(RiskRepository $riskRepository, CategoryRepository $categoryRepository, ProjectRepository $projectRepository)
-    {
+    public function __construct(
+        RiskRepository $riskRepository,
+        CategoryRepository $categoryRepository,
+        ProjectRepository $projectRepository,
+        Nette\Security\User $user
+    ) {
         $this->riskRepository = $riskRepository;
         $this->projectRepository = $projectRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->user = $user;
     }
 
     public function create()
@@ -40,6 +45,9 @@ class RiskForm extends Nette\Object
         }
 
         foreach($this->projectRepository->getAll() as $p) {
+            if ($this->user->isInRole('vedouci') && $this->user->id != $p->getLeader()->getId()) {
+                continue;
+            }
             $projects[$p->getId()] = $p->getName();
         }
 

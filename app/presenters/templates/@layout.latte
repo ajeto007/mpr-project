@@ -116,48 +116,48 @@
                 <li>
                     <a n:href="Homepage:"><i class="fa fa-dashboard"></i> <span>Nástěnka</span></a>
                 </li>
-                <li class="treeview">
+                <li n:if="$user->isAllowed('Projects', 'default')" n:class="$presenter->isLinkCurrent('Projects:*') ? active ,treeview">
                     <a href="#">
                         <i class="fa fa-bar-chart-o"></i>
                         <span>Projekty</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a n:href="Projects:create"><i class="fa fa-angle-double-right"></i> Vytvořit projekt</a></li>
+                        <li n:if="$user->isAllowed('Projects', 'create')"><a n:href="Projects:create"><i class="fa fa-angle-double-right"></i> Vytvořit projekt</a></li>
                         <li><a n:href="Projects:"><i class="fa fa-angle-double-right"></i> Projekty</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li n:if="$user->isAllowed('Risks', 'default')" n:class="$presenter->isLinkCurrent('Risks:*') ? active ,treeview">
                     <a href="#">
                         <i class="fa fa-th"></i>
                         <span>Rizika</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a n:href="Risks:add"><i class="fa fa-angle-double-right"></i>Přidat riziko</a></li>
+                        <li n:if="$user->isAllowed('Risks', 'add')"><a n:href="Risks:add"><i class="fa fa-angle-double-right"></i>Přidat riziko</a></li>
                         <li><a n:href="Risks:"><i class="fa fa-angle-double-right"></i>Rizika</a></li>
-                        <li><a n:href="Risks:categories"><i class="fa fa-angle-double-right"></i>Kategorie</a></li>
+                        <li n:if="$user->isAllowed('Projects', 'categories')"><a n:href="Risks:categories"><i class="fa fa-angle-double-right"></i>Kategorie</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li n:if="$user->isAllowed('Employees', 'default')" n:class="$presenter->isLinkCurrent('Employees:*') ? active ,treeview">
                     <a href="#">
                         <i class="fa fa-edit"></i>
                         <span>Firma</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a n:href="Employees:add"><i class="fa fa-angle-double-right"></i>Přidat zaměstnance</a></li>
+                        <li n:if="$user->isAllowed('Employees', 'add')"><a n:href="Employees:add"><i class="fa fa-angle-double-right"></i>Přidat zaměstnance</a></li>
                         <li><a n:href="Employees:"><i class="fa fa-angle-double-right"></i>Zaměstnanci</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li n:if="$user->isAllowed('Clients', 'default')" n:class="$presenter->isLinkCurrent('Clients:*') ? active ,treeview">
                     <a href="#">
                         <i class="fa fa-users"></i>
                         <span>Klienti</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a n:href="Clients:add"><i class="fa fa-angle-double-right"></i>Přidat klienta</a></li>
+                        <li n:if="$user->isAllowed('Clients', 'add')"><a n:href="Clients:add"><i class="fa fa-angle-double-right"></i>Přidat klienta</a></li>
                         <li><a n:href="Clients:"><i class="fa fa-angle-double-right"></i>Klienti</a></li>
                     </ul>
                 </li>

@@ -36,9 +36,12 @@ class RouterFactory
                 Route::VALUE => 'default',
                 Route::FILTER_TABLE => array(
                     'pridat' => 'add',
+                    'upravit' => 'edit',
                     'vytvorit' => 'create',
                     'detail' => 'detail',
-                    'kategorie' => 'categories'
+                    'kategorie' => 'categories',
+                    'profil' => 'profile',
+                    'zmena-hesla' => 'changePassword'
                 )
             ),
             'id' => null,

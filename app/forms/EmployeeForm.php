@@ -4,6 +4,7 @@ namespace App\Forms;
 
 use App\Model\Entity\Address;
 use App\Model\Repository\EmployeeRepository;
+use App\Model\Repository\ProjectRepository;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\Entity\Employee;
@@ -14,18 +15,22 @@ use Tracy\Debugger;
 class EmployeeForm extends Nette\Object
 {
     /** @var EmployeeRepository */
-    public $employeeRepository;
+    private $employeeRepository;
+    /** @var ProjectRepository */
+    private $projectRepository;
     /** @var Nette\Mail\SmtpMailer */
-    public $mailer;
+    private $mailer;
     /** @var Nette\Application\LinkGenerator */
-    public $linkGenerator;
+    private $linkGenerator;
 
     public function __construct(
         EmployeeRepository $employeeRepository,
+        ProjectRepository $projectRepository,
         Nette\Mail\SmtpMailer $mailer,
         Nette\Application\LinkGenerator $linkGenerator
     ) {
         $this->employeeRepository = $employeeRepository;
+        $this->projectRepository = $projectRepository;
         $this->mailer = $mailer;
         $this->linkGenerator = $linkGenerator;
     }
@@ -90,6 +95,14 @@ class EmployeeForm extends Nette\Object
 
             if ($employee->getRole() == 'bezprihlasovani' && $values->role != 'bezprihlasovani') {
                 $sendMail = true;
+            }
+
+            if (in_array($employee->getRole(), array('vedouci', 'admin')) && !in_array($values->role, array('vedouci', 'admin'))) {
+                $headOf = $this->projectRepository->getByParameters(array('leader' => $employee));
+                if (count($headOf) > 0) {
+                    $form->addError('invalid role change');
+                    return;
+                }
             }
         } else {
             $address = new Address();

@@ -4,16 +4,20 @@ namespace App\DataGrids;
 
 use App\Model\Repository\ClientRepository;
 use Nette\Object;
+use Nette\Security\User;
 use Ublaboo\DataGrid\DataGrid;
 
 class ClientDataGrid extends Object
 {
     /** @var ClientRepository */
     private $clientRepository;
+    /** @var User */
+    private $user;
 
-    public function __construct(ClientRepository $clientRepository)
+    public function __construct(ClientRepository $clientRepository, User $user)
     {
         $this->clientRepository = $clientRepository;
+        $this->user = $user;
     }
 
     public function create()
@@ -44,14 +48,16 @@ class ClientDataGrid extends Object
 
         $grid->addFilterText('phone', 'Telefon');
 
-        $grid->addAction('edit', 'Upravit', 'Clients:edit')
-            ->setIcon('pencil')
-            ->setClass('btn btn-xs btn-success');
+        if ($this->user->isAllowed('Risks', 'edit')) {
+            $grid->addAction('edit', 'Upravit', 'Clients:edit')
+                ->setIcon('pencil')
+                ->setClass('btn btn-xs btn-success');
 
-        $grid->addAction('delete', 'Smazat', 'Clients:delete')
-            ->setIcon('trash')
-            ->setClass('btn btn-xs btn-danger')
-            ->setConfirm('Chcete opravdu odstranit klienta %s?', 'companyName');
+            $grid->addAction('delete', 'Smazat', 'Clients:delete')
+                ->setIcon('trash')
+                ->setClass('btn btn-xs btn-danger')
+                ->setConfirm('Chcete opravdu odstranit klienta %s?', 'companyName');
+        }
 
         $grid->setItemsDetail();
         $grid->setTemplateFile(__DIR__ . '/ClientDataGrid.latte');

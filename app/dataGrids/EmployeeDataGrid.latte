@@ -1,6 +1,7 @@
 {extends $original_template}
 
 {block detail}
+    {var $roles = array('vedouci' => 'Vedoucí projektu', 'zamestnanec' => 'Zaměstnanec', 'admin' => 'Admin', 'bezprihlasovani' => 'Zaměstnanec bez přihlašování')}
     <h2>{$item->name}</h2>
     <p>
         <strong>E-mail: </strong>{$item->email}<br>
@@ -8,6 +9,6 @@
         <strong>Datum narození: </strong>{$item->birthday|date:'j.n.Y'}<br>
         <strong>Adresa: </strong>{$item->address->street}, {$item->address->postcode} {$item->address->city}<br>
         <strong>Pozice: </strong>{$item->position}<br>
-        <strong>Role: </strong>{$item->role}<br>
+        <strong>Role: </strong>{$roles[$item->role]}<br>
     </p>
 {/block}

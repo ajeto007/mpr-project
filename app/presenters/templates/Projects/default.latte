@@ -1,6 +1,6 @@
 {block title}
     Projekty
-    <a n:href="Projects:create" class="btn btn-default">Vytvořit projekt</a>
+    <a n:if="$user->isAllowed('Projects', 'create')" n:href="Projects:create" class="btn btn-default">Vytvořit projekt</a>
 {/block}
 
 {block breadcrumb}

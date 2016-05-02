@@ -43,13 +43,32 @@ class RisksPresenter extends BasePresenter
     public function actionDelete($id)
     {
         $risk = $this->riskRepository->getById($id);
-        $this->riskRepository->delete($risk);
-        $this->flashMessage('Riziko ' . $risk->getName() . ' smazáno');
+
+        if (is_null($risk)) {
+            throw new Nette\Application\BadRequestException();
+        } elseif ($this->user->isInRole('vedouci') && $this->user->id != $risk->getProject()->getLeader()->getId()) {
+            throw new Nette\Application\ForbiddenRequestException();
+        }
+
+        try {
+            $this->riskRepository->delete($risk);
+            $this->flashMessage('Riziko ' . $risk->getName() . ' smazáno');
+        } catch (\Exception $e) {
+            $this->flashMessage('Riziko se nepodařilo smazat.', 'danger');
+        }
         $this->redirect('default');
     }
 
     public function actionActivate($id)
     {
+        $risk = $this->riskRepository->getById($id);
+
+        if (is_null($risk)) {
+            throw new Nette\Application\BadRequestException();
+        } elseif ($this->user->isInRole('vedouci') && $this->user->id != $risk->getProject()->getLeader()->getId()) {
+            throw new Nette\Application\ForbiddenRequestException();
+        }
+
         $risk = $this->riskRepository->getById($id);
         $risk->setState('aktivni');
         $risk->setActivated(new \DateTime());
@@ -59,6 +78,14 @@ class RisksPresenter extends BasePresenter
 
     public function actionDeactivate($id)
     {
+        $risk = $this->riskRepository->getById($id);
+
+        if (is_null($risk)) {
+            throw new Nette\Application\BadRequestException();
+        } elseif ($this->user->isInRole('vedouci') && $this->user->id != $risk->getProject()->getLeader()->getId()) {
+            throw new Nette\Application\ForbiddenRequestException();
+        }
+        
         $risk = $this->riskRepository->getById($id);
         $risk->setState('neaktivni');
         $this->riskRepository->update($risk);

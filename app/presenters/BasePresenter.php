@@ -18,5 +18,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                 return;
             }
         }
+
+        if (!$this->user->isAllowed($this->getName(), $this->getAction())) {
+            throw new Nette\Application\ForbiddenRequestException;
+        }
     }
 }
