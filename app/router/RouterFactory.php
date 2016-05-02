@@ -40,6 +40,7 @@ class RouterFactory
                     'vytvorit' => 'create',
                     'detail' => 'detail',
                     'kategorie' => 'categories',
+                    'matice' => 'matrix',
                     'profil' => 'profile',
                     'zmena-hesla' => 'changePassword'
                 )

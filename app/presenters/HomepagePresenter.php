@@ -28,10 +28,6 @@ class HomepagePresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $user = $this->getUser();
-        $actualUser = $user->getIdentity();
-        $this->template->myProjects = $this->projectRepository->getByUser($actualUser);
-
         $risks = $this->riskRepository->getAll();
 
         foreach (Risk::$impactsEnum as $iKey => $iValue) {

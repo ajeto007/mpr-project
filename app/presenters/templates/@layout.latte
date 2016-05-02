@@ -136,7 +136,8 @@
                     <ul class="treeview-menu">
                         <li n:if="$user->isAllowed('Risks', 'add')"><a n:href="Risks:add"><i class="fa fa-angle-double-right"></i>Přidat riziko</a></li>
                         <li><a n:href="Risks:"><i class="fa fa-angle-double-right"></i>Rizika</a></li>
-                        <li n:if="$user->isAllowed('Projects', 'categories')"><a n:href="Risks:categories"><i class="fa fa-angle-double-right"></i>Kategorie</a></li>
+                        <li n:if="$user->isAllowed('Risks', 'matrix')"><a n:href="Risks:matrix"><i class="fa fa-angle-double-right"></i>Matice rizik</a></li>
+                        <li n:if="$user->isAllowed('Risks', 'categories')"><a n:href="Risks:categories"><i class="fa fa-angle-double-right"></i>Kategorie</a></li>
                     </ul>
                 </li>
                 <li n:if="$user->isAllowed('Employees', 'default')" n:class="$presenter->isLinkCurrent('Employees:*') ? active ,treeview">

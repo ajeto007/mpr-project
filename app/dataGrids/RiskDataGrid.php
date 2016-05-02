@@ -18,6 +18,14 @@ class RiskDataGrid extends Object
     private $latestAdded = false;
     /** @var boolean */
     private $latestActivated = false;
+    /** @var boolean */
+    private $matrixView = false;
+    /** @var integer */
+    private $projectId;
+    /** @var string */
+    private $impacts;
+    /** @var string */
+    private $probability;
 
     public function __construct(RiskRepository $riskRepository, User $user)
     {
@@ -57,6 +65,27 @@ class RiskDataGrid extends Object
         $this->latestActivated = $latestActivated;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMatrixView()
+    {
+        return $this->matrixView;
+    }
+
+    /**
+     * @param $projectId
+     * @param $impacts
+     * @param $probability
+     */
+    public function useMatrixView($projectId, $impacts, $probability)
+    {
+        $this->matrixView = true;
+        $this->projectId = $projectId;
+        $this->impacts = $impacts;
+        $this->probability = $probability;
+    }
+
     public function create()
     {
         $grid = new DataGrid();
@@ -86,6 +115,15 @@ class RiskDataGrid extends Object
         if ($this->latestActivated) {
             $source->andWhere('table.state = :state')
                 ->setParameter('state', 'aktivni');
+        }
+
+        if ($this->matrixView) {
+            $source->andWhere('pr.id = :project')
+                ->andWhere('table.impacts = :impacts')
+                ->andWhere('table.probability = :probability')
+                ->setParameter('project', $this->projectId)
+                ->setParameter('impacts', $this->impacts)
+                ->setParameter('probability', $this->probability);
         }
 
         $grid->setDataSource($source);
@@ -130,7 +168,7 @@ class RiskDataGrid extends Object
 
             $grid->addFilterSelect('state', 'Stav', array_merge(array('' => '-'), Risk::$stateEnum));
 
-            if ($this->user->isAllowed('Risks', 'edit')) {
+            if ($this->user->isAllowed('Risks', 'edit') && !$this->matrixView) {
                 $grid->addAction('edit', 'Upravit', 'Risks:edit')
                     ->setIcon('pencil')
                     ->setClass('btn btn-xs btn-success');
@@ -178,8 +216,10 @@ class RiskDataGrid extends Object
             }
         }
 
-        $grid->setItemsDetail();
-        $grid->setTemplateFile(__DIR__ . '/RiskDataGrid.latte');
+        if (!$this->matrixView) {
+            $grid->setItemsDetail();
+            $grid->setTemplateFile(__DIR__ . '/RiskDataGrid.latte');
+        }
 
         return $grid;
     }

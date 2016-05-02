@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\Model\Entity\Risk;
 use Nette;
 use App\Model;
 use App\Forms\RiskForm;
@@ -20,8 +21,16 @@ class RisksPresenter extends BasePresenter
     public $riskFormFactory;
     /** @var RiskDataGrid @inject */
     public $riskDataGrid;
+    /** @var RiskDataGrid @inject */
+    public $matrixRiskDataGrid;
     /** @var CategoryDataGrid @inject */
     public $categoryDataGrid;
+    /** @var integer */
+    private $projectId;
+    /** @var string */
+    private $impacts;
+    /** @var string */
+    private $probability;
 
     public function renderCategories()
     {
@@ -131,5 +140,69 @@ class RisksPresenter extends BasePresenter
     {
         $control = $this->categoryDataGrid->create();
         return $control;
+    }
+
+    protected function createComponentMatrixDataGrid()
+    {
+        $this->matrixRiskDataGrid->useMatrixView($this->projectId, $this->impacts, $this->probability);
+        $control = $this->matrixRiskDataGrid->create();
+        return $control;
+    }
+
+    public function renderMatrix()
+    {
+        $source = $this->riskRepository->getQB()
+            ->join('table.project', 'pr')
+            ->join('pr.leader', 'le')
+            ->join('pr.employees', 'em');
+
+        if ($this->user->isInRole('zamestnanec') || $this->user->isInRole('vedouci')) {
+            $source->where('em.id = :user')
+                ->setParameter('user', $this->user->id);
+            if ($this->user->isInRole('vedouci')) {
+                $source->orWhere('le.id = :leader')
+                    ->setParameter('leader', $this->user->id);
+            }
+        }
+
+        $projects = array();
+        /** @var Risk[] $risks */
+        $risks = $source->getQuery()->getResult();
+
+        foreach ($risks as $risk) {
+            $projects[$risk->getProject()->getId()] = array(
+                'name' => $risk->getProject()->getName(),
+                'matrix' => $this->getEmptyMatrix()
+            );
+        }
+
+        foreach ($risks as $risk) {
+            $projectId = $risk->getProject()->getId();
+            $projects[$projectId]['matrix'][$risk->impacts][$risk->probability]['count']++;
+        }
+
+        $this->template->probabilities = Risk::$probabilityEnum;
+        $this->template->impacts = Risk::$impactsEnum;
+        $this->template->projects = $projects;
+    }
+
+    private function getEmptyMatrix()
+    {
+        $matrix = array();
+        foreach (Risk::$impactsEnum as $iKey => $iValue) {
+            $matrix[$iKey] = [];
+            foreach (Risk::$probabilityEnum as $pKey => $pValue) {
+                $matrix[$iKey][$pKey]['count'] = 0;;
+            }
+        }
+        return $matrix;
+    }
+
+    public function handleShowMatrixDataGrid($projectId, $impacts, $probability)
+    {
+        $this->projectId = $projectId;
+        $this->impacts = $impacts;
+        $this->probability = $probability;
+        $this->redrawControl('matrixDataGrid');
     }
 }
