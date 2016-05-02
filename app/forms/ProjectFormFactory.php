@@ -33,7 +33,12 @@ class ProjectFormFactory extends Nette\Object
      */
     public function create()
     {
-        $employees = EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getAll());
+
+        $heads = array_merge(
+            EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getByParameters(array('role' => 'vedouci'))),
+            EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getByParameters(array('role' => 'admin')))
+        );
+        $employees =  EmployeeRepository::getIdIndexedArrayOfNames($this->employeeRepository->getAll());
         $clients = ClientRepository::getIdIndexedArrayOfNames($this->clientRepository->getAll());
 
         $form = new Form;
@@ -46,7 +51,7 @@ class ProjectFormFactory extends Nette\Object
             ->setAttribute('rows', 3)
             ->setAttribute('placeholder', 'Vyplnit');
 
-        $form->addSelect('leader', 'Vedoucí', $employees)
+        $form->addSelect('leader', 'Vedoucí', $heads)
             ->setRequired('Vyberte prosím vedoucího projektu.');
 
         $form->addSelect('client', 'Klient', $clients)

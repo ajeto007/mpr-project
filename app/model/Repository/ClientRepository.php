@@ -19,7 +19,7 @@ class ClientRepository extends AbstractRepository
     }
 
     /**
-     * @return ClientRepository[]
+     * @return Client[]
      */
     public function getAll()
     {
@@ -28,7 +28,7 @@ class ClientRepository extends AbstractRepository
 
     /**
      * @param $id
-     * @return ClientRepository|null
+     * @return Client|null
      */
     public function getById($id)
     {
@@ -37,7 +37,7 @@ class ClientRepository extends AbstractRepository
 
     /**
      * @param $parameters
-     * @return ClientRepository[]
+     * @return Client[]
      */
     public function getByParameters($parameters)
     {
@@ -46,7 +46,7 @@ class ClientRepository extends AbstractRepository
 
     /**
      * @param $parameters
-     * @return ClientRepository|null
+     * @return Client|null
      */
     public function getOneByParameters($parameters)
     {
