@@ -12,6 +12,8 @@ class ProjectDataGrid extends Object
 {
     /** @var ProjectRepository */
     private $projectRepository;
+    /** @var boolean */
+    private $onDashboard = false;
     /** @var User */
     private $user;
 
@@ -19,6 +21,22 @@ class ProjectDataGrid extends Object
     {
         $this->projectRepository = $projectRepository;
         $this->user = $user;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getOnDashboard()
+    {
+        return $this->onDashboard;
+    }
+
+    /**
+     * @param boolean $onDashboard
+     */
+    public function setOnDashboard($onDashboard)
+    {
+        $this->onDashboard = $onDashboard;
     }
 
     public function create()
@@ -40,48 +58,60 @@ class ProjectDataGrid extends Object
             }
         }
 
+        if ($this->onDashboard) {
+            $source->andWhere('table.toDate > :now')
+                ->andWhere('table.fromDate < :now')
+                ->setParameter('now', new \DateTime());
+        }
+
         $grid->setDataSource($source);
 
-        $grid->addColumnText('name', 'Jméno')
-            ->setSortable();
+        $grid->addColumnText('name', 'Jméno');
 
-        $grid->addFilterText('name', 'Jméno');
+        $grid->addColumnText('leader', 'Vedoucí', 'leader.name');
 
-        $grid->addColumnText('leader', 'Vedoucí', 'leader.name')
-            ->setSortable('le.name');
+        if (!$this->onDashboard) {
+            $grid->getColumn('name')
+                ->setSortable();
 
-        $grid->addFilterText('leader', 'Vedoucí', 'le.name');
+            $grid->addFilterText('name', 'Jméno');
 
-        $grid->addColumnDateTime('fromDate', 'Datum začátku')
-            ->setSortable();
+            $grid->getColumn('leader')
+                ->setSortable('le.name');
 
-        $grid->addFilterDateRange('fromDate', 'Datum začátku');
+            $grid->addFilterText('leader', 'Vedoucí', 'le.name');
 
-        $grid->addColumnDateTime('toDate', 'Datum konce')
-            ->setSortable();
+            $grid->addColumnDateTime('fromDate', 'Datum začátku')
+                ->setSortable();
 
-        $grid->addFilterDateRange('toDate', 'Datum konce');
+            $grid->addFilterDateRange('fromDate', 'Datum začátku');
 
-        if ($this->user->isAllowed('Projects', 'edit')) {
-            $grid->addAction('edit', 'Upravit', 'Projects:edit')
-                ->setIcon('pencil')
-                ->setClass('btn btn-xs btn-success');
+            $grid->addColumnDateTime('toDate', 'Datum konce')
+                ->setSortable();
 
-            $grid->addAction('delete', 'Smazat', 'Projects:delete')
-                ->setIcon('trash')
-                ->setClass('btn btn-xs btn-danger')
-                ->setConfirm('Chcete opravdu odstranit projekt?', 'name');
+            $grid->addFilterDateRange('toDate', 'Datum konce');
 
-            if ($this->user->isInRole('vedouci')) {
-                $grid->allowRowsAction('edit', function($item) {
-                    /** @var Project $item */
-                    return $item->getLeader()->getId() == $this->user->id;
-                });
+            if ($this->user->isAllowed('Projects', 'edit')) {
+                $grid->addAction('edit', 'Upravit', 'Projects:edit')
+                    ->setIcon('pencil')
+                    ->setClass('btn btn-xs btn-success');
 
-                $grid->allowRowsAction('delete', function($item) {
-                    /** @var Project $item */
-                    return $item->getLeader()->getId() == $this->user->id;
-                });
+                $grid->addAction('delete', 'Smazat', 'Projects:delete')
+                    ->setIcon('trash')
+                    ->setClass('btn btn-xs btn-danger')
+                    ->setConfirm('Chcete opravdu odstranit projekt?', 'name');
+
+                if ($this->user->isInRole('vedouci')) {
+                    $grid->allowRowsAction('edit', function($item) {
+                        /** @var Project $item */
+                        return $item->getLeader()->getId() == $this->user->id;
+                    });
+
+                    $grid->allowRowsAction('delete', function($item) {
+                        /** @var Project $item */
+                        return $item->getLeader()->getId() == $this->user->id;
+                    });
+                }
             }
         }
 

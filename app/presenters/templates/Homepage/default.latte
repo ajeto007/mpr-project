@@ -15,24 +15,7 @@
                     <h3 class="box-title">Nově přidaná rizika</h3>
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Datum přidání</th>
-                                <th>Popis</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {foreach $newRisks as $r}
-                            <tr>
-                                <td>{$r[0]->id}</td>
-                                <td>{$r[0]->created|date:'%d/%m/%Y %H:%I:%S'}</td>
-                                <td>{$r[0]->name}</td>
-                            </tr>
-                            {/foreach}
-                        </tbody>
-                    </table>
+                    {control latestAddedRiskDataGrid}
                 </div>
             </div>
         </div>
@@ -42,16 +25,7 @@
                     <h3 class="box-title">Tvoje aktivní projekty</h3>
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <tbody>
-                            {foreach $myProjects as $p}
-                            <tr>
-                                <td><a href="{link Projects:edit id=>$p->id}">{$p->name}</a></td>
-                                <td>{if $p->leader->id==$user->identity->id}vedoucí{/if}</td>
-                            </tr>
-                            {/foreach}
-                        </tbody>
-                    </table>
+                    {control myProjectDataGrid}
                 </div>
             </div>
         </div>
@@ -63,24 +37,7 @@
                     <h3 class="box-title">Nedávno aktivovaná rizika</h3>
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Datum aktivace</th>
-                                <th>Popis</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {foreach $activatedRisks as $r}
-                            <tr>
-                                <td>{$r[0]->id}</td>
-                                <td>{$r[0]->activated|date:'%d/%m/%Y %H:%I:%S'}</td>
-                                <td>{$r[0]->name}</td>
-                            </tr>
-                            {/foreach}
-                        </tbody>
-                    </table>
+                    {control latestActivatedRiskDataGrid}
                 </div>
             </div>
         </div>

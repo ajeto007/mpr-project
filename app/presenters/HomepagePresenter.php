@@ -2,6 +2,8 @@
 
 namespace App\Presenters;
 
+use App\DataGrids\ProjectDataGrid;
+use App\DataGrids\RiskDataGrid;
 use Nette;
 use App\Model;
 
@@ -13,10 +15,15 @@ class HomepagePresenter extends BasePresenter
 {
     /** @var ProjectRepository @inject */
     public $projectRepository;
-
     /** @var RiskRepository @inject */
     public $riskRepository;
-
+    /** @var RiskDataGrid @inject */
+    public $latestAddedRiskDataGrid;
+    /** @var RiskDataGrid @inject */
+    public $latestActivatedRiskDataGrid;
+    /** @var ProjectDataGrid @inject */
+    public $myProjectsDataGrid;
+    /** @var array */
     public $matrix = [];
 
     public function renderDefault()
@@ -24,8 +31,6 @@ class HomepagePresenter extends BasePresenter
         $user = $this->getUser();
         $actualUser = $user->getIdentity();
         $this->template->myProjects = $this->projectRepository->getByUser($actualUser);
-        $this->template->newRisks = $this->riskRepository->getNewestRisk(5);
-        $this->template->activatedRisks = $this->riskRepository->getActivatedRisk(5);
 
         $risks = $this->riskRepository->getAll();
 
@@ -43,5 +48,26 @@ class HomepagePresenter extends BasePresenter
         $this->template->probabilities = Risk::$probabilityEnum;
         $this->template->impacts = Risk::$impactsEnum;
         $this->template->matrix = $this->matrix;
+    }
+
+    protected function createComponentLatestAddedRiskDataGrid()
+    {
+        $this->latestAddedRiskDataGrid->setLatestAdded(true);
+        $control = $this->latestAddedRiskDataGrid->create();
+        return $control;
+    }
+
+    protected function createComponentLatestActivatedRiskDataGrid()
+    {
+        $this->latestActivatedRiskDataGrid->setLatestActivated(true);
+        $control = $this->latestActivatedRiskDataGrid->create();
+        return $control;
+    }
+
+    protected function createComponentMyProjectDataGrid()
+    {
+        $this->myProjectsDataGrid->setOnDashboard(true);
+        $control = $this->myProjectsDataGrid->create();
+        return $control;
     }
 }
