@@ -32,7 +32,11 @@ class SignPresenter extends BasePresenter
             $this->redirect('Homepage:');
         };
         $form->onError[] = function ($form) {
-            $this->flashMessage('Se zadanými údaji se nepodařilo přihlásit. Zkuste to prosím znovu.', 'danger');
+            if ($form->getErrors()[0] == 'invalid rights') {
+                $this->flashMessage('Pro vstup do systému bohužel nemáte požadovaná práva.', 'warning');
+            } else {
+                $this->flashMessage('Se zadanými údaji se nepodařilo přihlásit. Zkuste to prosím znovu.', 'danger');
+            }
         };
         return $form;
     }

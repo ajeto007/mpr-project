@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Entity\Employee;
 use App\Model\Repository\EmployeeRepository;
 use Nette;
 use Nette\Security\Passwords;
@@ -33,9 +34,11 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
         $user = $this->userRepository->getOneByParameters(array('email' => $username));
 
         if (is_null($user)) {
-            throw new Nette\Security\AuthenticationException('The username is incorrect.');
+            throw new Nette\Security\AuthenticationException('invalid username');
         } elseif (!Passwords::verify($password, $user->getPassword())) {
-            throw new Nette\Security\AuthenticationException('The password is incorrect.');
+            throw new Nette\Security\AuthenticationException('invalid password');
+        } elseif ($user->getRole() == 'bezprihlasovani') {
+            throw new Nette\Security\AuthenticationException('invalid rights');
         } elseif (Passwords::needsRehash($user->getPassword())) {
             $this->userRepository->updateWhere(array('password' => $password), array('email' => $username));
         }

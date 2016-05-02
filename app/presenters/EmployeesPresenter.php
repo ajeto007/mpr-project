@@ -33,6 +33,8 @@ class EmployeesPresenter extends BasePresenter
         $data = $employee->getAsArray();
         $data['birthday'] = $data['birthday']->format('m/d/Y');
         $data = array_merge($data, $addressData);
+        $this['employeeForm']['role']->setDisabled();
+        $this['employeeForm']['position']->setDisabled();
         $this['employeeForm']->setDefaults($data);
     }
 

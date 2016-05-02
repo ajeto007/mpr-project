@@ -82,22 +82,19 @@ class EmployeeForm extends Nette\Object
 
     public function processForm(Form $form, $values)
     {
+        $sendMail = false;
+
         if ($values->id) {
             $employee = $this->employeeRepository->getById($values->id);
             $address = $employee->getAddress();
+
+            if ($employee->getRole() == 'bezprihlasovani' && $values->role != 'bezprihlasovani') {
+                $sendMail = true;
+            }
         } else {
             $address = new Address();
             $employee = new Employee();
-            $password = Nette\Utils\Random::generate();
-            $mail = new Nette\Mail\Message();
-            $mail->setFrom('NoReply MPR <noreply@mpr.cz>')
-                ->addTo($values->email)
-                ->setSubject('Registrace do administrace')
-                ->setBody("Dobrý den,\nPřihlašovací údaje do administrace na stránce " .
-                    $this->linkGenerator->link('Homepage:') . " jsou:\n" .
-                    "Přihlašovací e-mail: " . $values->email . "\n" .
-                    "Vygenerované heslo: " . $password);
-            $employee->setPassword(Nette\Security\Passwords::hash($password));
+            $sendMail = true;
         }
     
         $address->setStreet($values->street);
@@ -112,6 +109,19 @@ class EmployeeForm extends Nette\Object
         $employee->setRole($values->role);
         $employee->setPosition($values->position);
 
+        if ($sendMail) {
+            $password = Nette\Utils\Random::generate();
+            $mail = new Nette\Mail\Message();
+            $mail->setFrom('NoReply MPR <noreply@mpr.cz>')
+                ->addTo($values->email)
+                ->setSubject('Registrace do administrace')
+                ->setBody("Dobrý den,\nPřihlašovací údaje do administrace na stránce " .
+                    $this->linkGenerator->link('Homepage:') . " jsou:\n" .
+                    "Přihlašovací e-mail: " . $values->email . "\n" .
+                    "Vygenerované heslo: " . $password);
+            $employee->setPassword(Nette\Security\Passwords::hash($password));
+        }
+
         try {
             if ($values->id) {
                 $this->employeeRepository->update($employee);
@@ -119,6 +129,9 @@ class EmployeeForm extends Nette\Object
             } else {
                 $this->employeeRepository->insert($employee);
                 $this->employeeRepository->insert($address);
+            }
+
+            if ($sendMail) {
                 $this->mailer->send($mail);
             }
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
