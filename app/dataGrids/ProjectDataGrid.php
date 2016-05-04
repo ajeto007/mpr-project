@@ -47,7 +47,7 @@ class ProjectDataGrid extends Object
 
         $source = $this->projectRepository->getQB()
             ->join('table.leader', 'le')
-            ->join('table.employees', 'em');
+            ->leftJoin('table.employees', 'em');
 
         if ($this->user->isInRole('zamestnanec') || $this->user->isInRole('vedouci')) {
             $source->where('em.id = :user')
