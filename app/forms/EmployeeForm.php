@@ -97,11 +97,13 @@ class EmployeeForm extends Nette\Object
                 $sendMail = true;
             }
 
-            if (in_array($employee->getRole(), array('vedouci', 'admin')) && !in_array($values->role, array('vedouci', 'admin'))) {
-                $headOf = $this->projectRepository->getByParameters(array('leader' => $employee));
-                if (count($headOf) > 0) {
-                    $form->addError('invalid role change');
-                    return;
+            if (isset($values->role)) {
+                if (in_array($employee->getRole(), array('vedouci', 'admin')) && !in_array($values->role, array('vedouci', 'admin'))) {
+                    $headOf = $this->projectRepository->getByParameters(array('leader' => $employee));
+                    if (count($headOf) > 0) {
+                        $form->addError('invalid role change');
+                        return;
+                    }
                 }
             }
         } else {
@@ -118,9 +120,13 @@ class EmployeeForm extends Nette\Object
         $employee->setName($values->name);
         $employee->setAddress($address);
         $employee->setBirthday(new \DateTime($values->birthday));
-        $employee->setPhone($values->phone); 
-        $employee->setRole($values->role);
-        $employee->setPosition($values->position);
+        $employee->setPhone($values->phone);
+        if (isset($values->role)) {
+            $employee->setRole($values->role);
+        }
+        if (isset($values->position)) {
+            $employee->setPosition($values->position);
+        }
 
         if ($sendMail) {
             $password = Nette\Utils\Random::generate();
