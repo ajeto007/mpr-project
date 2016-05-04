@@ -64,6 +64,16 @@ class EmployeeDataGrid extends Object
                 ->setIcon('trash')
                 ->setClass('btn btn-xs btn-danger')
                 ->setConfirm('Chcete opravdu odstranit zaměstnance %s?', 'name');
+
+            $grid->allowRowsAction('edit', function($item) {
+                /** @var Employee $item */
+                return $item->getId() != $this->user->id;
+            });
+
+            $grid->allowRowsAction('delete', function($item) {
+                /** @var Employee $item */
+                return $item->getId() != $this->user->id;
+            });
         }
 
         $grid->setItemsDetail();
