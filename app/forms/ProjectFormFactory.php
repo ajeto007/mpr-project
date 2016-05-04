@@ -107,7 +107,9 @@ class ProjectFormFactory extends Nette\Object
         $project->setName($values->name);
         $project->setDescription($values->description);
         $project->setClient($this->clientRepository->getById($values->client));
-        $project->setLeader($allEmployees[$values->leader]);
+        if (isset($values->leader)) {
+            $project->setLeader($allEmployees[$values->leader]);
+        }
         $project->setDescription($values->description);
         $project->setFromDate($dateFrom);
         $project->setToDate($dateTo);
