@@ -96,7 +96,8 @@ class RiskDataGrid extends Object
             ->join('table.category', 'ca')
             ->join('table.project', 'pr')
             ->join('pr.leader', 'le')
-            ->leftJoin('pr.employees', 'em');
+            ->leftJoin('pr.employees', 'em')
+            ->distinct();
 
         if ($this->user->isInRole('zamestnanec') || $this->user->isInRole('vedouci')) {
             $source->where('em.id = :user')
@@ -108,8 +109,8 @@ class RiskDataGrid extends Object
         }
 
         if ($this->latestAdded || $this->latestActivated) {
-            $source->orderBy('table.created', 'DESC')
-                ->setMaxResults(5);
+            $grid->setItemsPerPageList(array(5, 10, 20, 50));
+            $grid->setDefaultSort(['created' => 'DESC']);
         }
 
         if ($this->latestActivated) {

@@ -47,7 +47,8 @@ class ProjectDataGrid extends Object
 
         $source = $this->projectRepository->getQB()
             ->join('table.leader', 'le')
-            ->leftJoin('table.employees', 'em');
+            ->leftJoin('table.employees', 'em')
+            ->distinct();
 
         if ($this->user->isInRole('zamestnanec') || $this->user->isInRole('vedouci')) {
             $source->where('em.id = :user')
@@ -59,6 +60,8 @@ class ProjectDataGrid extends Object
         }
 
         if ($this->onDashboard) {
+            $grid->setItemsPerPageList(array(5, 10, 20, 50));
+            $grid->setDefaultSort(['name' => 'ASC']);
             $source->andWhere('table.toDate > :now')
                 ->andWhere('table.fromDate < :now')
                 ->setParameter('now', new \DateTime());
