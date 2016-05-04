@@ -96,7 +96,7 @@ class RiskDataGrid extends Object
             ->join('table.category', 'ca')
             ->join('table.project', 'pr')
             ->join('pr.leader', 'le')
-            ->join('pr.employees', 'em');
+            ->leftJoin('pr.employees', 'em');
 
         if ($this->user->isInRole('zamestnanec') || $this->user->isInRole('vedouci')) {
             $source->where('em.id = :user')

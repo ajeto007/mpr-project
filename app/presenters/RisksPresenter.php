@@ -2,7 +2,9 @@
 
 namespace App\Presenters;
 
+use App\Model\Entity\Project;
 use App\Model\Entity\Risk;
+use App\Model\Repository\ProjectRepository;
 use Nette;
 use App\Model;
 use App\Forms\RiskForm;
@@ -17,6 +19,8 @@ class RisksPresenter extends BasePresenter
     public $categoryRepository;
     /** @var RiskRepository @inject */
     public $riskRepository;
+    /** @var ProjectRepository @inject */
+    public $projectRepository;
     /** @var RiskForm @inject */
     public $riskFormFactory;
     /** @var RiskDataGrid @inject */
@@ -61,7 +65,7 @@ class RisksPresenter extends BasePresenter
 
         try {
             $this->riskRepository->delete($risk);
-            $this->flashMessage('Riziko ' . $risk->getName() . ' smazáno');
+            $this->flashMessage('Riziko ' . $risk->getName() . ' smazáno', 'success');
         } catch (\Exception $e) {
             $this->flashMessage('Riziko se nepodařilo smazat.', 'danger');
         }
@@ -154,36 +158,47 @@ class RisksPresenter extends BasePresenter
         $source = $this->riskRepository->getQB()
             ->join('table.project', 'pr')
             ->join('pr.leader', 'le')
-            ->join('pr.employees', 'em');
+            ->leftJoin('pr.employees', 'em');
+
+        $projects = $this->projectRepository->getQB()
+            ->join('table.leader', 'le')
+            ->leftJoin('table.employees', 'em');
 
         if ($this->user->isInRole('zamestnanec') || $this->user->isInRole('vedouci')) {
             $source->where('em.id = :user')
                 ->setParameter('user', $this->user->id);
+
+            $projects->where('em.id = :user')
+                ->setParameter('user', $this->user->id);
             if ($this->user->isInRole('vedouci')) {
                 $source->orWhere('le.id = :leader')
+                    ->setParameter('leader', $this->user->id);
+
+                $projects->orWhere('le.id = :leader')
                     ->setParameter('leader', $this->user->id);
             }
         }
 
-        $projects = array();
         /** @var Risk[] $risks */
         $risks = $source->getQuery()->getResult();
-
-        foreach ($risks as $risk) {
-            $projects[$risk->getProject()->getId()] = array(
-                'name' => $risk->getProject()->getName(),
+        /** @var Project[] $projectsMatrix */
+        $projects = $projects->getQuery()->getResult();
+        $projectsMatrix = array();
+        foreach ($projects as $project) {
+            $projectsMatrix[$project->getId()] = array(
+                'name' => $project->getName(),
                 'matrix' => $this->getEmptyMatrix()
             );
         }
 
         foreach ($risks as $risk) {
             $projectId = $risk->getProject()->getId();
-            $projects[$projectId]['matrix'][$risk->impacts][$risk->probability]['count']++;
+            $projectsMatrix[$projectId]['matrix'][$risk->impacts][$risk->probability]['count']++;
         }
 
         $this->template->probabilities = Risk::$probabilityEnum;
         $this->template->impacts = Risk::$impactsEnum;
-        $this->template->projects = $projects;
+        $this->template->projects = $projectsMatrix;
     }
 
     private function getEmptyMatrix()
